@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "mantek/live-update",
+	"version": "0.9.0",
+	"title": "Live update",
+	"category": "newsroom",
+	"parent": [ "mantek/live-updates" ],
+	"description": "One timestamped entry in a live blog.",
+	"textdomain": "wp-newsroom-blocks",
+	"attributes": {
+		"timestamp": {
+			"type": "integer",
+			"default": 0
+		},
+		"important": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"interactivity": true
+	},
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php"
+}

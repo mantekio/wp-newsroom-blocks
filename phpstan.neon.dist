@@ -1,0 +1,8 @@
+# WordPress core stubs come from szepeviktor/phpstan-wordpress, included automatically by
+# phpstan/extension-installer. The render.php files are one-line templates that receive
+# $attributes, $content and $block from WordPress, so the classes they call are analysed instead.
+parameters:
+	level: 8
+	paths:
+		- wp-newsroom-blocks.php
+		- includes

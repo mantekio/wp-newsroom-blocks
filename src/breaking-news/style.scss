@@ -1,0 +1,156 @@
+// Front end and editor.
+.wp-block-mantek-breaking-news {
+	--mantek-breaking-duration: 40s;
+
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	overflow: hidden;
+	padding-block: 0.5rem;
+	padding-inline: 0.75rem;
+
+	&[hidden] {
+		display: none;
+	}
+
+	.wp-block-mantek-breaking-news__label {
+		flex: none;
+		padding-inline-end: 0.75rem;
+		border-inline-end: 2px solid currentcolor;
+		font-weight: 700;
+	}
+
+	.wp-block-mantek-breaking-news__viewport {
+		display: flex;
+		flex: 1;
+		min-inline-size: 0;
+		overflow: hidden;
+	}
+
+	// Two identical tracks side by side: as the first scrolls out,
+	// the second takes its place.
+	.wp-block-mantek-breaking-news__track {
+		display: flex;
+		flex: none;
+		gap: 2.5rem;
+		margin: 0;
+		padding: 0;
+		padding-inline-end: 2.5rem;
+		list-style: none;
+		white-space: nowrap;
+		animation: mantek-breaking-scroll var(--mantek-breaking-duration) linear infinite;
+	}
+
+	.wp-block-mantek-breaking-news__item a {
+		color: inherit;
+		text-decoration: none;
+
+		&:hover,
+		&:focus-visible {
+			text-decoration: underline;
+		}
+	}
+
+	// Paused on hover, on keyboard focus, and by the pause button.
+	&:hover .wp-block-mantek-breaking-news__track,
+	&:focus-within .wp-block-mantek-breaking-news__track,
+	&.is-paused .wp-block-mantek-breaking-news__track {
+		animation-play-state: paused;
+	}
+
+	.wp-block-mantek-breaking-news__pause,
+	.wp-block-mantek-breaking-news__close {
+		display: grid;
+		flex: none;
+		place-items: center;
+		inline-size: 2rem;
+		block-size: 2rem;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		color: inherit;
+		cursor: pointer;
+
+		&[hidden] {
+			display: none;
+		}
+	}
+
+	// Two bars for pause; a triangle for play once paused.
+	.wp-block-mantek-breaking-news__pause::before {
+		content: "";
+		inline-size: 0.75rem;
+		block-size: 0.875rem;
+		border-inline: 0.25rem solid currentcolor;
+	}
+
+	&.is-paused .wp-block-mantek-breaking-news__pause::before {
+		inline-size: 0;
+		block-size: 0;
+		border-block: 0.45rem solid transparent;
+		border-inline-start: 0.75rem solid currentcolor;
+		border-inline-end: 0;
+	}
+
+	.wp-block-mantek-breaking-news__close::before {
+		content: "\00d7";
+		font-size: 1.5rem;
+		line-height: 1;
+	}
+}
+
+// A strong default, used only when no background has been chosen.
+:where(.wp-block-mantek-breaking-news:not(.has-background)) {
+	background-color: #c8102e;
+	color: #fff;
+}
+
+// Headlines move left in left-to-right text and right in right-to-left text,
+// so readers meet the start of each one first. The direction lives in a
+// custom property, which the build's automatic RTL stylesheet leaves alone,
+// so it is decided here, per element, and holds whichever stylesheet
+// WordPress serves. (WordPress 6.8 serves the left-to-right file on RTL sites
+// for blocks registered from a manifest.) [dir] covers browsers without :dir().
+.wp-block-mantek-breaking-news {
+	--mantek-breaking-shift: -100%;
+}
+
+// Separate rules, so a browser without :dir() still applies the [dir] one.
+[dir="rtl"] .wp-block-mantek-breaking-news {
+	--mantek-breaking-shift: 100%;
+}
+
+.wp-block-mantek-breaking-news:dir(rtl) {
+	--mantek-breaking-shift: 100%;
+}
+
+.wp-block-mantek-breaking-news:dir(ltr) {
+	--mantek-breaking-shift: -100%;
+}
+
+@keyframes mantek-breaking-scroll {
+
+	to {
+		transform: translateX(var(--mantek-breaking-shift));
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	.wp-block-mantek-breaking-news {
+
+		.wp-block-mantek-breaking-news__viewport {
+			overflow-x: auto;
+		}
+
+		.wp-block-mantek-breaking-news__track {
+			animation: none;
+		}
+
+		.wp-block-mantek-breaking-news__track[aria-hidden="true"],
+		.wp-block-mantek-breaking-news__pause {
+			display: none;
+		}
+	}
+}

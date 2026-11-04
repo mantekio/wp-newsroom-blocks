@@ -1,0 +1,14 @@
+# Dependencies (this is a plugin, not an app: Composer dependencies are not committed)
+/node_modules/
+/vendor/
+composer.lock
+
+# Test and tooling output
+/artifacts/
+/test-results/
+/playwright-report/
+/.phpunit.cache/
+*.zip
+
+# macOS
+.DS_Store

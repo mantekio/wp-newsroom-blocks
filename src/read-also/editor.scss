@@ -1,0 +1,34 @@
+// Editor only: the picker and the per-item controls.
+.wp-block-mantek-read-also {
+
+	.wp-block-mantek-read-also__item {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+	}
+
+	.wp-block-mantek-read-also__actions {
+		display: inline-flex;
+		flex: none;
+	}
+
+	.wp-block-mantek-read-also__picker {
+		margin-block-start: 1rem;
+		padding-block-start: 1rem;
+		border-block-start: 1px solid #ddd;
+	}
+
+	.wp-block-mantek-read-also__results {
+		margin-block: 0.5rem 0;
+		margin-inline: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.wp-block-mantek-read-also__hint {
+		margin: 0;
+		font-size: 0.875em;
+		opacity: 0.8;
+	}
+}

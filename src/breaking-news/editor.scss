@@ -1,0 +1,16 @@
+// Editor only: a still preview that wraps instead of scrolling.
+.wp-block-mantek-breaking-news.is-preview {
+
+	.wp-block-mantek-breaking-news__track {
+		flex-wrap: wrap;
+		gap: 0.5rem 2.5rem;
+		white-space: normal;
+		animation: none;
+	}
+
+	.wp-block-mantek-breaking-news__empty {
+		margin: 0;
+		font-size: 0.875em;
+		opacity: 0.85;
+	}
+}

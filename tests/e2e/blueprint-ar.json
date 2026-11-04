@@ -1,0 +1,26 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"meta": {
+		"title": "WP Newsroom Blocks: local Arabic test site",
+		"author": "ManTek Technologies"
+	},
+	"landingPage": "/election-night/",
+	"steps": [
+		{
+			"step": "activatePlugin",
+			"pluginPath": "wp-newsroom-blocks/wp-newsroom-blocks.php"
+		},
+		{
+			"step": "setSiteLanguage",
+			"language": "ar"
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require '/wordpress/wp-load.php'; global $wp_rewrite; $wp_rewrite->set_permalink_structure( '/%postname%/' ); $wp_rewrite->flush_rules();"
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require '/wordpress/wp-content/plugins/wp-newsroom-blocks/demo/seed.php';"
+		}
+	]
+}

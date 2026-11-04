@@ -1,0 +1,395 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Newsroom Blocks 0.9.0\n"
+"Report-Msgid-Bugs-To: https://github.com/mantekio/wp-newsroom-blocks/issues\n"
+"Last-Translator: ManTek Technologies\n"
+"Language-Team: Arabic\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n == 0) ? 0 : ((n == 1) ? 1 : ((n == 2) ? 2 : ((n % 100 >= 3 && n % 100 <= 10) ? 3 : ((n % 100 >= 11 && n % 100 <= 99) ? 4 : 5))));\n"
+"X-Domain: wp-newsroom-blocks\n"
+
+#. Plugin Name of the plugin
+#: wp-newsroom-blocks.php
+msgid "WP Newsroom Blocks"
+msgstr "WP Newsroom Blocks"
+
+#. Plugin URI of the plugin
+#: wp-newsroom-blocks.php
+msgid "https://github.com/mantekio/wp-newsroom-blocks"
+msgstr "https://github.com/mantekio/wp-newsroom-blocks"
+
+#. Description of the plugin
+#: wp-newsroom-blocks.php
+msgid "Editorial blocks for newsrooms, built right-to-left first: Read also, Story timeline, Live updates and a Breaking news bar."
+msgstr "مكوّنات تحريرية لغرف الأخبار، صُمّمت للكتابة من اليمين إلى اليسار أولاً: «اقرأ أيضاً»، والخط الزمني للقصة، والتغطية المباشرة، وشريط الأخبار العاجلة."
+
+#. Author of the plugin
+#: wp-newsroom-blocks.php
+msgid "ManTek Technologies"
+msgstr "منطق للتقنيات"
+
+#. Author URI of the plugin
+#: wp-newsroom-blocks.php
+msgid "https://www.mantek.io"
+msgstr "https://www.mantek.io"
+
+#: includes/BreakingNews.php:46
+#: build/breaking-news/index.js:1
+msgid "Breaking"
+msgstr "عاجل"
+
+#: includes/BreakingNews.php:86
+msgid "Pause the headlines"
+msgstr "إيقاف العناوين مؤقتاً"
+
+#: includes/BreakingNews.php:87
+msgid "Close the breaking news bar"
+msgstr "إغلاق شريط الأخبار العاجلة"
+
+#: includes/LiveUpdates.php:78
+#: build/live-updates/index.js:1
+msgid "Live"
+msgstr "مباشر"
+
+#: includes/LiveUpdates.php:79
+#: build/live-updates/index.js:1
+msgid "Coverage ended"
+msgstr "انتهت التغطية"
+
+#. translators: %s: number of updates in the live blog.
+#: includes/LiveUpdates.php:83
+#: build/live-updates/index.js:2
+#, php-format,js-format
+msgid "%s update"
+msgid_plural "%s updates"
+msgstr[0] "لا تحديثات"
+msgstr[1] "تحديث واحد"
+msgstr[2] "تحديثان"
+msgstr[3] "%s تحديثات"
+msgstr[4] "%s تحديثاً"
+msgstr[5] "%s تحديث"
+
+#: includes/LiveUpdates.php:104
+msgid "Live updates"
+msgstr "التحديثات المباشرة"
+
+#: includes/LiveUpdates.php:133
+#: build/live-update/index.js:1
+msgid "Key update"
+msgstr "تحديث مهم"
+
+#: includes/LiveUpdates.php:188
+msgid "Invalid post ID."
+msgstr "معرّف المقالة غير صالح."
+
+#. translators: %s: number of new updates waiting to be shown.
+#: includes/LiveUpdates.php:317
+#, php-format
+msgid "Show %s new update"
+msgid_plural "Show %s new updates"
+msgstr[0] "عرض التحديثات الجديدة"
+msgstr[1] "عرض تحديث جديد"
+msgstr[2] "عرض تحديثين جديدين"
+msgstr[3] "عرض %s تحديثات جديدة"
+msgstr[4] "عرض %s تحديثاً جديداً"
+msgstr[5] "عرض %s تحديث جديد"
+
+#. translators: %s: how long ago an update was posted, such as "5 mins".
+#: includes/LiveUpdates.php:333
+#, php-format
+msgid "%s ago"
+msgstr "قبل %s"
+
+#: includes/Plugin.php:84
+msgid "Newsroom"
+msgstr "غرفة الأخبار"
+
+#: includes/ReadAlso.php:46
+#: build/read-also/index.js:1
+msgid "Read also"
+msgstr "اقرأ أيضاً"
+
+#: build/breaking-news/index.js:1
+msgid "Headlines"
+msgstr "العناوين"
+
+#: build/breaking-news/index.js:1
+msgid "Category"
+msgstr "التصنيف"
+
+#: build/breaking-news/index.js:1
+msgid "All categories"
+msgstr "كل التصنيفات"
+
+#: build/breaking-news/index.js:1
+msgid "Number of headlines"
+msgstr "عدد العناوين"
+
+#: build/breaking-news/index.js:1
+msgid "Only posts from the last (hours)"
+msgstr "أقصى عمر للخبر (بالساعات)"
+
+#: build/breaking-news/index.js:1
+msgid "With nothing that recent, the bar is not shown at all."
+msgstr "إن لم يُنشر شيء خلال هذه المدة، لا يظهر الشريط إطلاقاً."
+
+#: build/breaking-news/index.js:1
+msgid "Scroll speed (pixels per second)"
+msgstr "سرعة التمرير (بكسل في الثانية)"
+
+#. translators: %d: number of hours.
+#: build/breaking-news/index.js:2
+#, js-format
+msgid "Nothing published in the last %d hour, so the bar is hidden on the site for now."
+msgid_plural "Nothing published in the last %d hours, so the bar is hidden on the site for now."
+msgstr[0] "لم يُنشر شيء خلال آخر %d ساعة، لذا الشريط مخفي على الموقع حالياً."
+msgstr[1] "لم يُنشر شيء خلال الساعة الأخيرة، لذا الشريط مخفي على الموقع حالياً."
+msgstr[2] "لم يُنشر شيء خلال الساعتين الأخيرتين، لذا الشريط مخفي على الموقع حالياً."
+msgstr[3] "لم يُنشر شيء خلال آخر %d ساعات، لذا الشريط مخفي على الموقع حالياً."
+msgstr[4] "لم يُنشر شيء خلال آخر %d ساعة، لذا الشريط مخفي على الموقع حالياً."
+msgstr[5] "لم يُنشر شيء خلال آخر %d ساعة، لذا الشريط مخفي على الموقع حالياً."
+
+#: build/live-update/index.js:1
+msgid "What is the latest?"
+msgstr "ما آخر المستجدات؟"
+
+#: build/live-update/index.js:1
+msgid "Change the time"
+msgstr "تغيير الوقت"
+
+#: build/live-update/index.js:1
+msgid "Unmark as a key update"
+msgstr "إلغاء تمييزه تحديثاً مهماً"
+
+#: build/live-update/index.js:1
+msgid "Mark as a key update"
+msgstr "تمييزه تحديثاً مهماً"
+
+#: build/live-updates/index.js:1
+msgid "Coverage"
+msgstr "التغطية"
+
+#: build/live-updates/index.js:1
+msgid "Coverage is live"
+msgstr "التغطية مستمرة"
+
+#: build/live-updates/index.js:1
+msgid "Readers see a Live badge and are offered new updates without reloading."
+msgstr "يرى القرّاء شارة «مباشر»، وتُعرض عليهم التحديثات الجديدة دون إعادة تحميل الصفحة."
+
+#: build/live-updates/index.js:1
+msgid "Readers see that coverage has ended, and the page stops checking for updates."
+msgstr "يرى القرّاء أن التغطية انتهت، وتتوقف الصفحة عن البحث عن تحديثات."
+
+#: build/live-updates/index.js:1
+msgid "Check for new updates every (seconds)"
+msgstr "فترة البحث عن تحديثات جديدة (بالثواني)"
+
+#: build/live-updates/index.js:2
+msgid "Add an update"
+msgstr "إضافة تحديث"
+
+#: build/read-also/index.js:1
+msgid "(no title)"
+msgstr "(بدون عنوان)"
+
+#: build/read-also/index.js:1
+msgid "Settings"
+msgstr "الإعدادات"
+
+#: build/read-also/index.js:1
+msgid "Show featured images"
+msgstr "عرض الصور البارزة"
+
+#: build/read-also/index.js:1
+msgid "Search below to add up to five related articles."
+msgstr "ابحث في الأسفل لإضافة ما يصل إلى خمس مقالات ذات صلة."
+
+#: build/read-also/index.js:1
+msgid "Unavailable: no longer published"
+msgstr "غير متاحة: لم تعد منشورة"
+
+#: build/read-also/index.js:1
+msgid "Move up"
+msgstr "نقل إلى الأعلى"
+
+#: build/read-also/index.js:1
+msgid "Move down"
+msgstr "نقل إلى الأسفل"
+
+#: build/read-also/index.js:1
+msgid "Remove"
+msgstr "إزالة"
+
+#: build/read-also/index.js:1
+msgid "Search articles"
+msgstr "البحث في المقالات"
+
+#: build/read-also/index.js:1
+msgid "No published articles match that search."
+msgstr "لا توجد مقالات منشورة تطابق هذا البحث."
+
+#. translators: %d: the most articles one block can link to.
+#: build/read-also/index.js:2
+#, js-format
+msgid "That is the maximum of %d articles. Remove one to add another."
+msgstr "بلغتَ الحد الأقصى: %d مقالات. أزِل واحدة لتضيف أخرى."
+
+#: build/timeline-event/index.js:1
+msgid "What happened?"
+msgstr "ماذا حدث؟"
+
+#: build/timeline-event/index.js:1
+msgid "Set the date"
+msgstr "تحديد التاريخ"
+
+#: build/timeline-event/index.js:1
+msgid "Remove the date"
+msgstr "حذف التاريخ"
+
+#: build/timeline-event/index.js:1
+msgid "Date or time"
+msgstr "التاريخ أو الوقت"
+
+#: build/timeline-event/index.js:1
+msgid "What happened, in a few words"
+msgstr "ماذا حدث، في كلمات قليلة"
+
+#: build/breaking-news/block.json
+msgctxt "block title"
+msgid "Breaking news bar"
+msgstr "شريط الأخبار العاجلة"
+
+#: build/breaking-news/block.json
+msgctxt "block description"
+msgid "A scrolling strip of the latest headlines from a category. It disappears by itself when nothing new has been published."
+msgstr "شريط متحرك بأحدث العناوين من تصنيف تختاره، ويختفي من تلقاء نفسه حين لا يُنشر جديد."
+
+#: build/breaking-news/block.json
+msgctxt "block keyword"
+msgid "ticker"
+msgstr "شريط أخبار"
+
+#: build/breaking-news/block.json
+#: build/live-updates/block.json
+msgctxt "block keyword"
+msgid "breaking"
+msgstr "عاجل"
+
+#: build/breaking-news/block.json
+msgctxt "block keyword"
+msgid "urgent"
+msgstr "طارئ"
+
+#: build/breaking-news/block.json
+msgctxt "block keyword"
+msgid "headlines"
+msgstr "عناوين"
+
+#: build/live-update/block.json
+msgctxt "block title"
+msgid "Live update"
+msgstr "تحديث مباشر"
+
+#: build/live-update/block.json
+msgctxt "block description"
+msgid "One timestamped entry in a live blog."
+msgstr "إدخال واحد بتوقيته في تغطية مباشرة."
+
+#: build/live-updates/block.json
+msgctxt "block title"
+msgid "Live updates"
+msgstr "تغطية مباشرة"
+
+#: build/live-updates/block.json
+msgctxt "block description"
+msgid "A live blog: timestamped updates, newest first, which readers see arrive without reloading the page."
+msgstr "تغطية مباشرة: تحديثات بتوقيتها، الأحدث أولاً، يراها القرّاء فور وصولها دون إعادة تحميل الصفحة."
+
+#: build/live-updates/block.json
+msgctxt "block keyword"
+msgid "live blog"
+msgstr "مدونة مباشرة"
+
+#: build/live-updates/block.json
+msgctxt "block keyword"
+msgid "coverage"
+msgstr "تغطية"
+
+#: build/live-updates/block.json
+msgctxt "block keyword"
+msgid "minute by minute"
+msgstr "لحظة بلحظة"
+
+#: build/read-also/block.json
+msgctxt "block title"
+msgid "Read also"
+msgstr "اقرأ أيضاً"
+
+#: build/read-also/block.json
+msgctxt "block description"
+msgid "Points readers to related articles you choose, right inside the story."
+msgstr "يدلّ القرّاء على مقالات ذات صلة تختارها أنت، داخل القصة نفسها."
+
+#: build/read-also/block.json
+msgctxt "block keyword"
+msgid "related"
+msgstr "ذات صلة"
+
+#: build/read-also/block.json
+msgctxt "block keyword"
+msgid "links"
+msgstr "روابط"
+
+#: build/read-also/block.json
+msgctxt "block keyword"
+msgid "see also"
+msgstr "انظر أيضاً"
+
+#: build/read-also/block.json
+msgctxt "block keyword"
+msgid "more"
+msgstr "المزيد"
+
+#: build/timeline-event/block.json
+msgctxt "block title"
+msgid "Timeline event"
+msgstr "حدث في الخط الزمني"
+
+#: build/timeline-event/block.json
+msgctxt "block description"
+msgid "One dated moment in a story timeline."
+msgstr "لحظة واحدة بتاريخها في الخط الزمني للقصة."
+
+#: build/timeline/block.json
+msgctxt "block title"
+msgid "Story timeline"
+msgstr "الخط الزمني للقصة"
+
+#: build/timeline/block.json
+msgctxt "block description"
+msgid "Shows how a story unfolded, one dated event after another."
+msgstr "يعرض كيف تطوّرت القصة، حدثاً بعد حدث، ولكلٍّ منها تاريخه."
+
+#: build/timeline/block.json
+msgctxt "block keyword"
+msgid "timeline"
+msgstr "خط زمني"
+
+#: build/timeline/block.json
+msgctxt "block keyword"
+msgid "chronology"
+msgstr "تسلسل زمني"
+
+#: build/timeline/block.json
+msgctxt "block keyword"
+msgid "events"
+msgstr "أحداث"
+
+#: build/timeline/block.json
+msgctxt "block keyword"
+msgid "sequence"
+msgstr "تسلسل"

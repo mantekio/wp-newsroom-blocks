@@ -1,0 +1,45 @@
+// Front end and editor. Logical properties only, so the rule and the
+// spacing follow the text direction.
+.wp-block-mantek-read-also {
+	// Padding and the rule count inside the theme's content width.
+	box-sizing: border-box;
+	border-inline-start: 4px solid currentcolor;
+	padding-block: 0.75rem;
+	padding-inline: 1rem;
+
+	// No letter-spacing or uppercase here: both break Arabic letter joining.
+	.wp-block-mantek-read-also__heading {
+		margin-block: 0 0.5rem;
+		font-size: 0.875em;
+		font-weight: 700;
+	}
+
+	.wp-block-mantek-read-also__list {
+		display: grid;
+		gap: 0.5rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.wp-block-mantek-read-also__link {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		font-weight: 600;
+		text-decoration: none;
+
+		&:hover .wp-block-mantek-read-also__title,
+		&:focus-visible .wp-block-mantek-read-also__title {
+			text-decoration: underline;
+		}
+	}
+
+	.wp-block-mantek-read-also__thumbnail {
+		flex: none;
+		inline-size: 4rem;
+		block-size: 4rem;
+		object-fit: cover;
+		border-radius: 4px;
+	}
+}

@@ -1,0 +1,49 @@
+{
+    "name": "mantekio/wp-newsroom-blocks",
+    "description": "Editorial blocks for newsrooms, built right-to-left first: Read also, Story timeline, Live updates and a Breaking news bar.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "keywords": ["wordpress", "wordpress-plugin", "gutenberg", "blocks", "block-editor", "newsroom", "live-blog", "rtl", "arabic", "interactivity-api"],
+    "homepage": "https://github.com/mantekio/wp-newsroom-blocks",
+    "authors": [
+        { "name": "ManTek Technologies", "homepage": "https://www.mantek.io" }
+    ],
+    "support": {
+        "issues": "https://github.com/mantekio/wp-newsroom-blocks/issues",
+        "source": "https://github.com/mantekio/wp-newsroom-blocks"
+    },
+    "require": {
+        "php": ">=8.1",
+        "composer/installers": "^1.0 || ^2.0"
+    },
+    "require-dev": {
+        "automattic/vipwpcs": "^3.1",
+        "brain/monkey": "^2.7",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.2",
+        "phpcompatibility/phpcompatibility-wp": "^2.1",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^10.5 || ^11.5 || ^12.0 || ^13.0",
+        "szepeviktor/phpstan-wordpress": "^2.0",
+        "wp-coding-standards/wpcs": "^3.4"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ManTek\\NewsroomBlocks\\Tests\\": "tests/php/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "phpstan/extension-installer": true
+        },
+        "sort-packages": true
+    },
+    "scripts": {
+        "lint": "phpcs",
+        "lint:fix": "phpcbf",
+        "analyse": "phpstan analyse --memory-limit=1G",
+        "test": "phpunit"
+    }
+}

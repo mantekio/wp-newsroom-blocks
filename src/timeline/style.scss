@@ -1,0 +1,63 @@
+// Front end and editor. The rail and markers sit on the start edge, so in
+// right-to-left languages they move to the right with no extra rules.
+.wp-block-mantek-timeline {
+	--mantek-timeline-rail: 2px;
+	--mantek-timeline-marker: 0.75rem;
+	--mantek-timeline-indent: 1.75rem;
+
+	position: relative;
+	box-sizing: border-box;
+	padding-inline-start: var(--mantek-timeline-indent);
+	padding-inline-end: 0;
+	list-style: none;
+
+	&::before {
+		content: "";
+		position: absolute;
+		inset-block: 0.5rem 0;
+		inset-inline-start: calc((var(--mantek-timeline-marker) - var(--mantek-timeline-rail)) / 2);
+		inline-size: var(--mantek-timeline-rail);
+		background: currentcolor;
+		opacity: 0.25;
+	}
+}
+
+.wp-block-mantek-timeline-event {
+	position: relative;
+	margin-block: 0 1.75rem;
+
+	&:last-child {
+		margin-block-end: 0;
+	}
+
+	&::before {
+		content: "";
+		position: absolute;
+		inset-block-start: 0.35em;
+		inset-inline-start: calc(-1 * var(--mantek-timeline-indent));
+		inline-size: var(--mantek-timeline-marker);
+		block-size: var(--mantek-timeline-marker);
+		border-radius: 50%;
+		background: currentcolor;
+	}
+
+	.wp-block-mantek-timeline-event__time {
+		display: block;
+		font-size: 0.875em;
+		font-weight: 600;
+		opacity: 0.8;
+	}
+
+	.wp-block-mantek-timeline-event__heading {
+		margin-block: 0.25rem 0.5rem;
+		font-size: 1.125em;
+	}
+
+	.wp-block-mantek-timeline-event__content > :first-child {
+		margin-block-start: 0;
+	}
+
+	.wp-block-mantek-timeline-event__content > :last-child {
+		margin-block-end: 0;
+	}
+}

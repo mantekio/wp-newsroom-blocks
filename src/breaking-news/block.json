@@ -1,0 +1,55 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "mantek/breaking-news",
+	"version": "0.9.0",
+	"title": "Breaking news bar",
+	"category": "newsroom",
+	"description": "A scrolling strip of the latest headlines from a category. It disappears by itself when nothing new has been published.",
+	"keywords": [ "ticker", "breaking", "urgent", "headlines" ],
+	"textdomain": "wp-newsroom-blocks",
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": ""
+		},
+		"categoryId": {
+			"type": "integer",
+			"default": 0
+		},
+		"count": {
+			"type": "integer",
+			"default": 5
+		},
+		"maxAgeHours": {
+			"type": "integer",
+			"default": 24
+		},
+		"speed": {
+			"type": "integer",
+			"default": 60
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ],
+		"interactivity": true,
+		"color": {
+			"background": true,
+			"text": true,
+			"link": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScriptModule": "file:./view.js",
+	"render": "file:./render.php"
+}

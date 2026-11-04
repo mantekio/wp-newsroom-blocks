@@ -1,0 +1,69 @@
+{
+	"name": "wp-newsroom-blocks",
+	"version": "0.9.0",
+	"private": true,
+	"description": "Editorial blocks for newsrooms, built right-to-left first: Read also, Story timeline, Live updates and a Breaking news bar.",
+	"author": "ManTek Technologies",
+	"license": "GPL-2.0-or-later",
+	"homepage": "https://github.com/mantekio/wp-newsroom-blocks",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mantekio/wp-newsroom-blocks.git"
+	},
+	"engines": {
+		"node": ">=22"
+	},
+	"files": [
+		"build",
+		"includes",
+		"languages",
+		"wp-newsroom-blocks.php",
+		"LICENSE",
+		"README.md",
+		"CHANGELOG.md"
+	],
+	"scripts": {
+		"build": "wp-scripts build --experimental-modules --blocks-manifest --webpack-copy-php",
+		"start": "wp-scripts start --experimental-modules --blocks-manifest --webpack-copy-php",
+		"format": "wp-scripts format",
+		"lint": "npm run lint:js && npm run lint:css && npm run typecheck",
+		"lint:js": "wp-scripts lint-js src tests playwright.config.ts",
+		"lint:css": "wp-scripts lint-style \"src/**/*.scss\"",
+		"typecheck": "tsc --noEmit",
+		"test:unit": "wp-scripts test-unit-js",
+		"test:e2e": "playwright test",
+		"playground": "wp-playground-cli server --mount=.:/wordpress/wp-content/plugins/wp-newsroom-blocks --blueprint=tests/e2e/blueprint.json --login --port=9400",
+		"i18n": "npm run i18n:pot && npm run i18n:mo && npm run i18n:json",
+		"i18n:pot": "wp i18n make-pot . languages/wp-newsroom-blocks.pot --exclude=node_modules,vendor,tests,src --domain=wp-newsroom-blocks",
+		"i18n:mo": "wp i18n make-mo languages",
+		"i18n:json": "wp i18n make-json languages --no-purge --pretty-print",
+		"plugin-zip": "wp-scripts plugin-zip"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.64.1",
+		"@types/react": "^19.3.0",
+		"@types/react-dom": "^19.3.0",
+		"@wordpress/e2e-test-utils-playwright": "^3.2.0",
+		"@wordpress/scripts": "^37.1.0",
+		"@wp-playground/cli": "^3.1.62",
+		"typescript": "~6.0.3",
+		"vitest": "^5.1.0"
+	},
+	"dependencies": {
+		"@wordpress/api-fetch": "^8.1.0",
+		"@wordpress/block-editor": "^20.0.0",
+		"@wordpress/blocks": "^17.1.0",
+		"@wordpress/components": "^44.0.0",
+		"@wordpress/compose": "^9.1.0",
+		"@wordpress/core-data": "^9.1.0",
+		"@wordpress/data": "^11.1.0",
+		"@wordpress/date": "^6.1.0",
+		"@wordpress/element": "^10.1.0",
+		"@wordpress/html-entities": "^5.1.0",
+		"@wordpress/i18n": "^7.1.0",
+		"@wordpress/icons": "^20.0.0",
+		"@wordpress/interactivity": "^8.1.0",
+		"@wordpress/interactivity-router": "^3.1.0",
+		"@wordpress/url": "^5.1.0"
+	}
+}

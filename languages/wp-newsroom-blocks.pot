@@ -1,0 +1,386 @@
+# Copyright (C) 2026 ManTek Technologies
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Newsroom Blocks 0.9.0\n"
+"Report-Msgid-Bugs-To: https://github.com/mantekio/wp-newsroom-blocks/issues\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-11-04T13:43:16+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: wp-newsroom-blocks\n"
+
+#. Plugin Name of the plugin
+#: wp-newsroom-blocks.php
+msgid "WP Newsroom Blocks"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: wp-newsroom-blocks.php
+msgid "https://github.com/mantekio/wp-newsroom-blocks"
+msgstr ""
+
+#. Description of the plugin
+#: wp-newsroom-blocks.php
+msgid "Editorial blocks for newsrooms, built right-to-left first: Read also, Story timeline, Live updates and a Breaking news bar."
+msgstr ""
+
+#. Author of the plugin
+#: wp-newsroom-blocks.php
+msgid "ManTek Technologies"
+msgstr ""
+
+#. Author URI of the plugin
+#: wp-newsroom-blocks.php
+msgid "https://www.mantek.io"
+msgstr ""
+
+#: includes/BreakingNews.php:46
+#: build/breaking-news/index.js:1
+msgid "Breaking"
+msgstr ""
+
+#: includes/BreakingNews.php:86
+msgid "Pause the headlines"
+msgstr ""
+
+#: includes/BreakingNews.php:87
+msgid "Close the breaking news bar"
+msgstr ""
+
+#: includes/LiveUpdates.php:78
+#: build/live-updates/index.js:1
+msgid "Live"
+msgstr ""
+
+#: includes/LiveUpdates.php:79
+#: build/live-updates/index.js:1
+msgid "Coverage ended"
+msgstr ""
+
+#. translators: %s: number of updates in the live blog.
+#: includes/LiveUpdates.php:83
+#: build/live-updates/index.js:2
+#, php-format,js-format
+msgid "%s update"
+msgid_plural "%s updates"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/LiveUpdates.php:104
+msgid "Live updates"
+msgstr ""
+
+#: includes/LiveUpdates.php:133
+#: build/live-update/index.js:1
+msgid "Key update"
+msgstr ""
+
+#: includes/LiveUpdates.php:188
+msgid "Invalid post ID."
+msgstr ""
+
+#. translators: %s: number of new updates waiting to be shown.
+#: includes/LiveUpdates.php:317
+#, php-format
+msgid "Show %s new update"
+msgid_plural "Show %s new updates"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: how long ago an update was posted, such as "5 mins".
+#: includes/LiveUpdates.php:333
+#, php-format
+msgid "%s ago"
+msgstr ""
+
+#: includes/Plugin.php:84
+msgid "Newsroom"
+msgstr ""
+
+#: includes/ReadAlso.php:46
+#: build/read-also/index.js:1
+msgid "Read also"
+msgstr ""
+
+#: build/breaking-news/index.js:1
+msgid "Headlines"
+msgstr ""
+
+#: build/breaking-news/index.js:1
+msgid "Category"
+msgstr ""
+
+#: build/breaking-news/index.js:1
+msgid "All categories"
+msgstr ""
+
+#: build/breaking-news/index.js:1
+msgid "Number of headlines"
+msgstr ""
+
+#: build/breaking-news/index.js:1
+msgid "Only posts from the last (hours)"
+msgstr ""
+
+#: build/breaking-news/index.js:1
+msgid "With nothing that recent, the bar is not shown at all."
+msgstr ""
+
+#: build/breaking-news/index.js:1
+msgid "Scroll speed (pixels per second)"
+msgstr ""
+
+#. translators: %d: number of hours.
+#: build/breaking-news/index.js:2
+#, js-format
+msgid "Nothing published in the last %d hour, so the bar is hidden on the site for now."
+msgid_plural "Nothing published in the last %d hours, so the bar is hidden on the site for now."
+msgstr[0] ""
+msgstr[1] ""
+
+#: build/live-update/index.js:1
+msgid "What is the latest?"
+msgstr ""
+
+#: build/live-update/index.js:1
+msgid "Change the time"
+msgstr ""
+
+#: build/live-update/index.js:1
+msgid "Unmark as a key update"
+msgstr ""
+
+#: build/live-update/index.js:1
+msgid "Mark as a key update"
+msgstr ""
+
+#: build/live-updates/index.js:1
+msgid "Coverage"
+msgstr ""
+
+#: build/live-updates/index.js:1
+msgid "Coverage is live"
+msgstr ""
+
+#: build/live-updates/index.js:1
+msgid "Readers see a Live badge and are offered new updates without reloading."
+msgstr ""
+
+#: build/live-updates/index.js:1
+msgid "Readers see that coverage has ended, and the page stops checking for updates."
+msgstr ""
+
+#: build/live-updates/index.js:1
+msgid "Check for new updates every (seconds)"
+msgstr ""
+
+#: build/live-updates/index.js:2
+msgid "Add an update"
+msgstr ""
+
+#: build/read-also/index.js:1
+msgid "(no title)"
+msgstr ""
+
+#: build/read-also/index.js:1
+msgid "Settings"
+msgstr ""
+
+#: build/read-also/index.js:1
+msgid "Show featured images"
+msgstr ""
+
+#: build/read-also/index.js:1
+msgid "Search below to add up to five related articles."
+msgstr ""
+
+#: build/read-also/index.js:1
+msgid "Unavailable: no longer published"
+msgstr ""
+
+#: build/read-also/index.js:1
+msgid "Move up"
+msgstr ""
+
+#: build/read-also/index.js:1
+msgid "Move down"
+msgstr ""
+
+#: build/read-also/index.js:1
+msgid "Remove"
+msgstr ""
+
+#: build/read-also/index.js:1
+msgid "Search articles"
+msgstr ""
+
+#: build/read-also/index.js:1
+msgid "No published articles match that search."
+msgstr ""
+
+#. translators: %d: the most articles one block can link to.
+#: build/read-also/index.js:2
+#, js-format
+msgid "That is the maximum of %d articles. Remove one to add another."
+msgstr ""
+
+#: build/timeline-event/index.js:1
+msgid "What happened?"
+msgstr ""
+
+#: build/timeline-event/index.js:1
+msgid "Set the date"
+msgstr ""
+
+#: build/timeline-event/index.js:1
+msgid "Remove the date"
+msgstr ""
+
+#: build/timeline-event/index.js:1
+msgid "Date or time"
+msgstr ""
+
+#: build/timeline-event/index.js:1
+msgid "What happened, in a few words"
+msgstr ""
+
+#: build/breaking-news/block.json
+msgctxt "block title"
+msgid "Breaking news bar"
+msgstr ""
+
+#: build/breaking-news/block.json
+msgctxt "block description"
+msgid "A scrolling strip of the latest headlines from a category. It disappears by itself when nothing new has been published."
+msgstr ""
+
+#: build/breaking-news/block.json
+msgctxt "block keyword"
+msgid "ticker"
+msgstr ""
+
+#: build/breaking-news/block.json
+#: build/live-updates/block.json
+msgctxt "block keyword"
+msgid "breaking"
+msgstr ""
+
+#: build/breaking-news/block.json
+msgctxt "block keyword"
+msgid "urgent"
+msgstr ""
+
+#: build/breaking-news/block.json
+msgctxt "block keyword"
+msgid "headlines"
+msgstr ""
+
+#: build/live-update/block.json
+msgctxt "block title"
+msgid "Live update"
+msgstr ""
+
+#: build/live-update/block.json
+msgctxt "block description"
+msgid "One timestamped entry in a live blog."
+msgstr ""
+
+#: build/live-updates/block.json
+msgctxt "block title"
+msgid "Live updates"
+msgstr ""
+
+#: build/live-updates/block.json
+msgctxt "block description"
+msgid "A live blog: timestamped updates, newest first, which readers see arrive without reloading the page."
+msgstr ""
+
+#: build/live-updates/block.json
+msgctxt "block keyword"
+msgid "live blog"
+msgstr ""
+
+#: build/live-updates/block.json
+msgctxt "block keyword"
+msgid "coverage"
+msgstr ""
+
+#: build/live-updates/block.json
+msgctxt "block keyword"
+msgid "minute by minute"
+msgstr ""
+
+#: build/read-also/block.json
+msgctxt "block title"
+msgid "Read also"
+msgstr ""
+
+#: build/read-also/block.json
+msgctxt "block description"
+msgid "Points readers to related articles you choose, right inside the story."
+msgstr ""
+
+#: build/read-also/block.json
+msgctxt "block keyword"
+msgid "related"
+msgstr ""
+
+#: build/read-also/block.json
+msgctxt "block keyword"
+msgid "links"
+msgstr ""
+
+#: build/read-also/block.json
+msgctxt "block keyword"
+msgid "see also"
+msgstr ""
+
+#: build/read-also/block.json
+msgctxt "block keyword"
+msgid "more"
+msgstr ""
+
+#: build/timeline-event/block.json
+msgctxt "block title"
+msgid "Timeline event"
+msgstr ""
+
+#: build/timeline-event/block.json
+msgctxt "block description"
+msgid "One dated moment in a story timeline."
+msgstr ""
+
+#: build/timeline/block.json
+msgctxt "block title"
+msgid "Story timeline"
+msgstr ""
+
+#: build/timeline/block.json
+msgctxt "block description"
+msgid "Shows how a story unfolded, one dated event after another."
+msgstr ""
+
+#: build/timeline/block.json
+msgctxt "block keyword"
+msgid "timeline"
+msgstr ""
+
+#: build/timeline/block.json
+msgctxt "block keyword"
+msgid "chronology"
+msgstr ""
+
+#: build/timeline/block.json
+msgctxt "block keyword"
+msgid "events"
+msgstr ""
+
+#: build/timeline/block.json
+msgctxt "block keyword"
+msgid "sequence"
+msgstr ""

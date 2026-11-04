@@ -1,0 +1,40 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"landingPage": "/election-night/",
+	"preferredVersions": {
+		"php": "8.3",
+		"wp": "latest"
+	},
+	"meta": {
+		"title": "WP Newsroom Blocks",
+		"author": "ManTek Technologies",
+		"description": "A demo story that uses all four blocks: Breaking news bar, Read also, Story timeline and Live updates."
+	},
+	"steps": [
+		{
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "git:directory",
+				"url": "https://github.com/mantekio/wp-newsroom-blocks",
+				"ref": "main",
+				"refType": "branch",
+				"path": "/"
+			},
+			"options": {
+				"activate": true,
+				"targetFolderName": "wp-newsroom-blocks"
+			}
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require '/wordpress/wp-load.php'; global $wp_rewrite; $wp_rewrite->set_permalink_structure( '/%postname%/' ); $wp_rewrite->flush_rules();"
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require '/wordpress/wp-content/plugins/wp-newsroom-blocks/demo/seed.php';"
+		},
+		{
+			"step": "login"
+		}
+	]
+}

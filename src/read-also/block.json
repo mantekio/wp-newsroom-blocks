@@ -1,0 +1,48 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "mantek/read-also",
+	"version": "0.9.0",
+	"title": "Read also",
+	"category": "newsroom",
+	"description": "Points readers to related articles you choose, right inside the story.",
+	"keywords": [ "related", "links", "see also", "more" ],
+	"textdomain": "wp-newsroom-blocks",
+	"attributes": {
+		"postIds": {
+			"type": "array",
+			"items": { "type": "integer" },
+			"default": []
+		},
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"showThumbnails": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"usesContext": [ "postId" ],
+	"supports": {
+		"html": false,
+		"color": {
+			"background": true,
+			"text": true,
+			"link": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true
+		}
+	},
+	"example": {},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

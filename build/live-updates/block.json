@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mantek/live-updates",
+  "version": "0.9.0",
+  "title": "Live updates",
+  "category": "newsroom",
+  "description": "A live blog: timestamped updates, newest first, which readers see arrive without reloading the page.",
+  "keywords": [
+    "live blog",
+    "breaking",
+    "coverage",
+    "minute by minute"
+  ],
+  "textdomain": "wp-newsroom-blocks",
+  "attributes": {
+    "isLive": {
+      "type": "boolean",
+      "default": true
+    },
+    "pollInterval": {
+      "type": "integer",
+      "default": 30
+    }
+  },
+  "usesContext": [
+    "postId"
+  ],
+  "supports": {
+    "html": false,
+    "multiple": false,
+    "anchor": true,
+    "interactivity": true,
+    "color": {
+      "background": true,
+      "text": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScriptModule": "file:./view.js",
+  "render": "file:./render.php"
+}

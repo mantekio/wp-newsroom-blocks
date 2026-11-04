@@ -1,0 +1,47 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "mantek/timeline",
+	"version": "0.9.0",
+	"title": "Story timeline",
+	"category": "newsroom",
+	"description": "Shows how a story unfolded, one dated event after another.",
+	"keywords": [ "timeline", "chronology", "events", "sequence" ],
+	"textdomain": "wp-newsroom-blocks",
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": [ "wide" ],
+		"color": {
+			"background": true,
+			"text": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true
+		}
+	},
+	"example": {
+		"innerBlocks": [
+			{
+				"name": "mantek/timeline-event",
+				"attributes": { "label": "08:30", "heading": "Polls open" },
+				"innerBlocks": [
+					{
+						"name": "core/paragraph",
+						"attributes": { "content": "Queues form early at stations across the city." }
+					}
+				]
+			},
+			{
+				"name": "mantek/timeline-event",
+				"attributes": { "label": "20:00", "heading": "Counting begins" }
+			}
+		]
+	},
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
+}
