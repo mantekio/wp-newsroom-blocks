@@ -274,6 +274,99 @@ test.describe( 'On the front end', () => {
 		}
 	} );
 
+	test( 'an update waiting for its photo is offered only once the photo is in', async ( {
+		page,
+		requestUtils,
+	} ) => {
+		const [ post ] = await requestUtils.rest< Post[] >( {
+			path: '/wp/v2/posts',
+			params: { slug: 'election-night', context: 'edit' },
+		} );
+		const original = post.content.raw;
+
+		// Routed requests skip the browser's cache, so every check reaches WordPress.
+		const endpoint = ( url: URL ) =>
+			url.href.includes( '/wp-newsroom-blocks/v1/live/' );
+		await page.route( endpoint, ( route ) => route.continue() );
+		await installTimers( page );
+		await openStory( page );
+		const live = page.getByRole( 'region', { name: 'Live updates' } );
+		const entries = live.locator( 'article' );
+		const before = await entries.count();
+
+		// What the endpoint tells the next check. Only a check made from now on counts: one the page
+		// started on its own, before the latest change, would answer for the content before it.
+		const check = async () => {
+			const since = Date.now();
+			const response = page.waitForResponse(
+				( answer ) =>
+					endpoint( new URL( answer.url() ) ) &&
+					answer.request().timing().startTime >= since
+			);
+			await tick( page );
+			return ( await ( await response ).json() ) as { newer: number };
+		};
+		// The same update both times, with the time it was given when it was added.
+		const timestamp = Math.floor( Date.now() / 1000 );
+		const publish = ( image: string ) =>
+			requestUtils.rest( {
+				method: 'POST',
+				path: `/wp/v2/posts/${ post.id }`,
+				data: {
+					content: original.replace(
+						LIVE_BLOG,
+						LIVE_BLOG +
+							[
+								`<!-- wp:mantek/live-update {"timestamp":${ timestamp }} -->`,
+								'<!-- wp:image -->',
+								image,
+								'<!-- /wp:image -->',
+								'<!-- /wp:mantek/live-update -->',
+								'',
+								'',
+							].join( '\n' )
+					),
+				},
+			} );
+
+		try {
+			// Published before its file was chosen, so the page would show nothing new: nothing is offered.
+			await publish(
+				'<figure class="wp-block-image"><img alt=""/></figure>'
+			);
+			expect( ( await check() ).newer ).toBe( 0 );
+			await expect(
+				live.getByRole( 'button', { name: /^Show / } )
+			).toBeHidden();
+
+			// The file is chosen: now the update is offered, and brings the photo in.
+			await publish(
+				'<figure class="wp-block-image"><img src="/wp-includes/images/w-logo-blue.png" alt="The count"/></figure>'
+			);
+			expect( ( await check() ).newer ).toBe( 1 );
+			const show = live.getByRole( 'button', {
+				name: 'Show 1 new update',
+			} );
+			await expect( show ).toBeVisible();
+			await show.click();
+
+			await expect( entries ).toHaveCount( before + 1 );
+			await expect( entries.first().locator( 'img' ) ).toHaveAttribute(
+				'alt',
+				'The count'
+			);
+			await expect(
+				live.locator( '.wp-block-mantek-live-updates__count' )
+			).toHaveText( `${ before + 1 } updates` );
+		} finally {
+			await requestUtils.rest( {
+				method: 'POST',
+				path: `/wp/v2/posts/${ post.id }`,
+				data: { content: original },
+			} );
+		}
+	} );
+
 	test( 'ending coverage reaches pages already open, and stops their checking', async ( {
 		page,
 		requestUtils,

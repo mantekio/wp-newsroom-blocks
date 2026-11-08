@@ -11,8 +11,12 @@ import {
 } from '@wordpress/e2e-test-utils-playwright';
 import type { Page } from '@playwright/test';
 
+type EditorBlock = {
+	clientId: string;
+	innerBlocks: EditorBlock[];
+};
 type BlockEditorSelectors = {
-	getBlocks: () => Array< { innerBlocks: Array< { clientId: string } > } >;
+	getBlocks: () => EditorBlock[];
 };
 type WordPressWindow = Window & {
 	wp: {
@@ -23,6 +27,11 @@ type WordPressWindow = Window & {
 			} & BlockEditorSelectors;
 			dispatch: ( store: string ) => {
 				duplicateBlocks: ( clientIds: string[] ) => void;
+				updateBlockAttributes: (
+					clientId: string,
+					attributes: Record< string, unknown >
+				) => void;
+				savePost: () => Promise< void >;
 			};
 		};
 	};
@@ -232,6 +241,125 @@ test.describe( 'In the editor', () => {
 			.click();
 		await expect( entries ).toHaveCount( 3 );
 		await expect( container.getByText( '2 updates' ) ).toBeVisible();
+	} );
+
+	test( 'an update is counted and stamped only once it has something to show, as on the site', async ( {
+		admin,
+		editor,
+		page,
+		requestUtils,
+	} ) => {
+		const now = Math.floor( Date.now() / 1000 );
+		const entry = ( block: string, timestamp = 0 ) =>
+			[
+				timestamp
+					? `<!-- wp:mantek/live-update {"timestamp":${ timestamp }} -->`
+					: '<!-- wp:mantek/live-update -->',
+				block,
+				'<!-- /wp:mantek/live-update -->',
+			].join( '\n' );
+		const paragraph = ( html: string ) =>
+			`<!-- wp:paragraph -->\n<p>${ html }</p>\n<!-- /wp:paragraph -->`;
+		// Saved as the editor saves these blocks, so the editor reads them back as it does whenever
+		// a post is opened again: a no-break space, for one, comes back as the entity &nbsp;.
+		const post = await requestUtils.createPost( {
+			title: 'Empty updates test',
+			status: 'publish',
+			date_gmt: new Date().toISOString(),
+			content: [
+				'<!-- wp:mantek/live-updates -->',
+				entry( paragraph( 'Counting begins.' ), now - 60 ),
+				// None of these shows readers anything, so the site neither shows them nor counts them.
+				entry(
+					'<!-- wp:image -->\n<figure class="wp-block-image"><img alt=""/></figure>\n<!-- /wp:image -->'
+				),
+				entry(
+					'<!-- wp:heading -->\n<h2 class="wp-block-heading"></h2>\n<!-- /wp:heading -->'
+				),
+				entry(
+					'<!-- wp:embed {"providerNameSlug":"youtube","responsive":true} /-->'
+				),
+				entry( paragraph( '&#8203;' ) ),
+				entry( paragraph( '&nbsp;' ) ),
+				entry( paragraph( String.fromCodePoint( 0xa0, 0x200f ) ) ),
+				entry( paragraph( 'Polls close.' ), now - 120 ),
+				'<!-- /wp:mantek/live-updates -->',
+			].join( '\n' ),
+		} );
+		const container = editor.canvas.locator(
+			'[data-type="mantek/live-updates"]'
+		);
+		const isDirty = () =>
+			( window as unknown as WordPressWindow ).wp.data
+				.select( 'core/editor' )
+				.isEditedPostDirty();
+
+		// Opening the post counts the two real updates, and gives none of the others a time.
+		await admin.editPost( post.id );
+		await expect( container.getByText( '2 updates' ) ).toBeVisible();
+		await page.waitForTimeout( 1_000 );
+		expect(
+			( await stamps( editor ) ).map( ( time ) => time > 0 )
+		).toEqual( [ true, false, false, false, false, false, false, true ] );
+		expect( await page.evaluate( isDirty ) ).toBe( false );
+
+		// What readers get: the page, its header, and the endpoint that open pages ask.
+		const site = async ( count: number ) => {
+			await page.goto( post.link );
+			const live = page.getByRole( 'region', { name: 'Live updates' } );
+			await expect( live.locator( 'article' ) ).toHaveCount( count );
+			await expect(
+				live.locator( '.wp-block-mantek-live-updates__count' )
+			).toHaveText( `${ count } updates` );
+			const summary = await requestUtils.rest< { count: number } >( {
+				path: `/wp-newsroom-blocks/v1/live/${ post.id }`,
+			} );
+			expect( summary.count ).toBe( count );
+		};
+		await site( 2 );
+
+		// An update added with only an Image block, its file not chosen yet: not counted, and no time.
+		await admin.editPost( post.id );
+		await expect( container.getByText( '2 updates' ) ).toBeVisible();
+		const liveBlog = await page.evaluate(
+			() =>
+				( window as unknown as WordPressWindow ).wp.data
+					.select( 'core/block-editor' )
+					.getBlocks()[ 0 ].clientId
+		);
+		await editor.insertBlock(
+			{
+				name: 'mantek/live-update',
+				innerBlocks: [ { name: 'core/image' } ],
+			},
+			{ clientId: liveBlog }
+		);
+		await expect(
+			container.locator( '[data-type="mantek/live-update"]' )
+		).toHaveCount( 9 );
+		await page.waitForTimeout( 1_000 );
+		await expect( container.getByText( '2 updates' ) ).toBeVisible();
+		expect( ( await stamps( editor ) )[ 8 ] ).toBe( 0 );
+
+		// Its file is chosen: now the update is counted and gets its time, and readers get it.
+		await page.evaluate( () => {
+			const { data } = ( window as unknown as WordPressWindow ).wp;
+			const [ live ] = data.select( 'core/block-editor' ).getBlocks();
+			data.dispatch( 'core/block-editor' ).updateBlockAttributes(
+				live.innerBlocks[ 8 ].innerBlocks[ 0 ].clientId,
+				{ url: '/wp-includes/images/w-logo-blue.png' }
+			);
+		} );
+		await expect( container.getByText( '3 updates' ) ).toBeVisible();
+		await expect
+			.poll( async () => ( await stamps( editor ) )[ 8 ] )
+			.toBeGreaterThan( 0 );
+		await page.evaluate( () =>
+			( window as unknown as WordPressWindow ).wp.data
+				.dispatch( 'core/editor' )
+				.savePost()
+		);
+		await site( 3 );
 	} );
 
 	test( 'a duplicated update gets a time of its own', async ( {

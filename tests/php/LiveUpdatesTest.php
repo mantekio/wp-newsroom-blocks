@@ -12,6 +12,8 @@ namespace ManTek\NewsroomBlocks\Tests;
 use Brain\Monkey\Functions;
 use ManTek\NewsroomBlocks\LiveUpdates;
 use PHPUnit\Framework\Attributes\DataProvider;
+use ReflectionProperty;
+use RuntimeException;
 use WP_Block;
 use WP_Error;
 use WP_Post;
@@ -19,26 +21,84 @@ use WP_REST_Request;
 
 final class LiveUpdatesTest extends TestCase {
 
+	/**
+	 * An Image block saved before its file was chosen.
+	 */
+	private const IMAGE_WITHOUT_FILE = '<figure class="wp-block-image"><img alt=""/></figure>';
+
 	protected function setUp(): void {
 		parent::setUp();
 		Functions\when( 'number_format_i18n' )->alias( static fn ( int $number ): string => number_format( $number ) );
+		Functions\when( 'get_option' )->alias( static fn ( string $name ): string => 'time_format' === $name ? 'H:i' : 'j F Y' );
+		Functions\when( 'wp_date' )->alias( static fn ( string $format, int $timestamp ): string => gmdate( $format, $timestamp ) );
+		// Blocks render as they were saved, as most do, unless a test says otherwise.
+		Functions\when( 'render_block' )->alias( array( self::class, 'saved' ) );
+
+		// No live blog is left half rendered by an earlier test.
+		foreach (
+			array(
+				'anchors' => array(),
+				'untimed' => 0,
+				'shown'   => array(),
+			) as $name => $value
+		) {
+			( new ReflectionProperty( LiveUpdates::class, $name ) )->setValue( null, $value );
+		}
+	}
+
+	protected function tearDown(): void {
+		unset( $GLOBALS['post'] );
+		parent::tearDown();
 	}
 
 	/**
-	 * One entry as parse_blocks() returns it: its timestamp, and a paragraph of content.
+	 * What a block renders when it renders as it was saved: its own HTML, then that of the blocks inside it.
+	 *
+	 * @param array<string, mixed> $block A parsed block.
+	 */
+	public static function saved( array $block ): string {
+		$html = (string) ( $block['innerHTML'] ?? '' );
+		foreach ( $block['innerBlocks'] ?? array() as $inner ) {
+			$html .= self::saved( $inner );
+		}
+
+		return $html;
+	}
+
+	/**
+	 * Renders Image blocks as core does: an image that has no file yet renders nothing at all.
+	 */
+	private function render_images_as_core_does(): void {
+		Functions\when( 'render_block' )->alias(
+			static fn ( array $block ): string => 'core/image' === $block['blockName'] && 1 !== preg_match( '/<img\b[^>]*\ssrc="[^"]+"/', $block['innerHTML'] )
+				? ''
+				: self::saved( $block )
+		);
+	}
+
+	/**
+	 * The post holding the live blog.
+	 */
+	private function post(): WP_Post {
+		return new WP_Post( array( 'ID' => 5 ) );
+	}
+
+	/**
+	 * One entry as parse_blocks() returns it: its timestamp, and one block of content.
 	 *
 	 * @param int    $timestamp Entry time.
-	 * @param string $html      The paragraph's saved HTML.
+	 * @param string $html      The block's saved HTML.
+	 * @param string $name      The block's name.
 	 * @return array<string, mixed>
 	 */
-	private function entry( int $timestamp, string $html = '<p>News.</p>' ): array {
+	private function entry( int $timestamp, string $html = '<p>News.</p>', string $name = 'core/paragraph' ): array {
 		return array(
 			'blockName'   => 'mantek/live-update',
 			'attrs'       => $timestamp > 0 ? array( 'timestamp' => $timestamp ) : array(),
 			'innerHTML'   => '',
 			'innerBlocks' => array(
 				array(
-					'blockName'   => 'core/paragraph',
+					'blockName'   => $name,
 					'attrs'       => array(),
 					'innerHTML'   => $html,
 					'innerBlocks' => array(),
@@ -62,12 +122,14 @@ final class LiveUpdatesTest extends TestCase {
 	}
 
 	/**
-	 * The state the container hands to the Interactivity API, captured as it renders.
+	 * Renders a live blog as WordPress does, its entries first and then the container, and captures
+	 * the state the container hands to the Interactivity API.
 	 *
-	 * @param array<string, mixed> $attributes Container attributes.
+	 * @param array<string, mixed>            $attributes Container attributes.
+	 * @param list<array<string, mixed>>|null $entries    Its parsed entries: by default the three of container().
 	 * @return array{html: string, state: array<string, mixed>}
 	 */
-	private function render_container( array $attributes ): array {
+	private function render_container( array $attributes, ?array $entries = null ): array {
 		$state = array();
 		Functions\when( 'rest_url' )->alias( static fn ( string $path ): string => 'https://example.com/wp-json/' . $path );
 		Functions\when( 'wp_interactivity_state' )->alias(
@@ -77,7 +139,16 @@ final class LiveUpdatesTest extends TestCase {
 			}
 		);
 
-		$html = LiveUpdates::render( $attributes, '<article>…</article>', new WP_Block( $this->container(), array( 'postId' => 5 ) ) );
+		$content = '';
+		foreach ( $entries ?? $this->container()['innerBlocks'] as $entry ) {
+			$rendered = '';
+			foreach ( $entry['innerBlocks'] as $inner ) {
+				$rendered .= render_block( $inner );
+			}
+			$content .= LiveUpdates::render_entry( $entry['attrs'], $rendered );
+		}
+
+		$html = LiveUpdates::render( $attributes, $content, new WP_Block( $this->container(), array( 'postId' => 5 ) ) );
 
 		return array(
 			'html'  => $html,
@@ -121,7 +192,7 @@ final class LiveUpdatesTest extends TestCase {
 		);
 		$entries[] = $this->entry( 0 );
 
-		$this->assertSame( array( 300, 200, 100, 0 ), LiveUpdates::timestamps( $entries ) );
+		$this->assertSame( array( 300, 200, 100, 0 ), LiveUpdates::timestamps( $entries, $this->post() ) );
 	}
 
 	public function test_timestamps_skip_entries_left_empty(): void {
@@ -138,7 +209,53 @@ final class LiveUpdatesTest extends TestCase {
 			),
 		);
 
-		$this->assertSame( array( 300, 200 ), LiveUpdates::timestamps( $entries ) );
+		$this->assertSame( array( 300, 200 ), LiveUpdates::timestamps( $entries, $this->post() ) );
+	}
+
+	public function test_timestamps_leave_out_an_image_still_waiting_for_its_file(): void {
+		$this->render_images_as_core_does();
+		$entries = array(
+			$this->entry( 300, self::IMAGE_WITHOUT_FILE, 'core/image' ),
+			$this->entry( 200, '<figure class="wp-block-image"><img src="https://example.com/a.jpg" alt=""/></figure>', 'core/image' ),
+		);
+
+		// Its saved HTML holds an <img>, but the page shows nothing, so neither is it counted.
+		$this->assertSame( array( 200 ), LiveUpdates::timestamps( $entries, $this->post() ) );
+	}
+
+	public function test_timestamps_count_an_entry_that_saves_nothing_but_renders_something(): void {
+		// A gallery of the images attached to the post saves no HTML, and core renders the images.
+		Functions\when( 'render_block' )->justReturn( '<figure class="wp-block-gallery"><img src="https://example.com/attached.jpg" alt=""/></figure>' );
+
+		$this->assertSame( array( 300 ), LiveUpdates::timestamps( array( $this->entry( 300, '', 'core/gallery' ) ), $this->post() ) );
+	}
+
+	public function test_entries_are_rendered_with_their_post_as_the_current_post(): void {
+		$page            = new WP_Post( array( 'ID' => 9 ) );
+		$GLOBALS['post'] = $page; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- The post of the page being served, which must be current again afterwards.
+		$post            = $this->post();
+		$current         = null;
+		Functions\when( 'render_block' )->alias(
+			static function ( array $block ) use ( &$current ): string {
+				$current = $GLOBALS['post'];
+				return self::saved( $block );
+			}
+		);
+
+		LiveUpdates::timestamps( array( $this->entry( 300 ) ), $post );
+
+		// As on the page, where blocks such as a gallery of the post's own images look it up.
+		$this->assertSame( $post, $current );
+		$this->assertSame( $page, $GLOBALS['post'] );
+
+		// The post that was current before is put back even when rendering fails.
+		Functions\when( 'render_block' )->alias( static fn (): string => throw new RuntimeException( 'Rendering failed.' ) );
+		try {
+			LiveUpdates::timestamps( array( $this->entry( 300 ) ), $post );
+		} catch ( RuntimeException $error ) {
+			$this->assertSame( 'Rendering failed.', $error->getMessage() );
+		}
+		$this->assertSame( $page, $GLOBALS['post'] );
 	}
 
 	/**
@@ -242,6 +359,34 @@ final class LiveUpdatesTest extends TestCase {
 			$response->get_data()
 		);
 		$this->assertSame( 'public, max-age=15', $response->headers['Cache-Control'] );
+	}
+
+	public function test_endpoint_does_not_announce_an_image_still_waiting_for_its_file(): void {
+		$this->render_images_as_core_does();
+		$container = $this->container();
+		array_unshift( $container['innerBlocks'], $this->entry( 400, self::IMAGE_WITHOUT_FILE, 'core/image' ) );
+		Functions\when( 'get_post' )->justReturn( $this->post() );
+		Functions\when( 'wp_cache_get' )->justReturn( false );
+		Functions\when( 'wp_cache_set' )->justReturn( true );
+		Functions\when( 'parse_blocks' )->justReturn( array( $container ) );
+
+		// A reader who has every entry the page shows is offered nothing, until the file is chosen.
+		$this->assertSame(
+			array(
+				'count'  => 3,
+				'latest' => 300,
+				'newer'  => 0,
+				'isLive' => true,
+			),
+			LiveUpdates::rest_summary(
+				new WP_REST_Request(
+					array(
+						'id'    => 5,
+						'after' => 300,
+					)
+				)
+			)->get_data()
+		);
 	}
 
 	public function test_endpoint_tells_open_pages_that_coverage_has_ended(): void {
@@ -425,7 +570,34 @@ final class LiveUpdatesTest extends TestCase {
 		$this->assertStringContainsString( '"interval":15', $html );
 		$this->assertStringContainsString( 'data-wp-watch---poll="callbacks.poll"', $html );
 		$this->assertStringContainsString( 'data-wp-watch---sync="callbacks.syncFromServer"', $html );
-		$this->assertStringContainsString( '<article>…</article>', $html );
+		$this->assertSame( 3, substr_count( $html, '<p>News.</p>' ) );
+	}
+
+	public function test_container_counts_the_entries_the_page_shows(): void {
+		$this->render_images_as_core_does();
+		$html = $this->render_container(
+			array( 'isLive' => true ),
+			array(
+				$this->entry( 400, self::IMAGE_WITHOUT_FILE, 'core/image' ),
+				$this->entry( 300 ),
+				$this->entry( 250, "<p>&nbsp;\u{200B}</p>" ),
+				$this->entry( 0, '<p>Not stamped yet.</p>' ),
+			)
+		)['html'];
+
+		$this->assertSame( 2, substr_count( $html, '<article ' ) );
+		$this->assertStringContainsString( '>2 updates</span>', $html );
+		// The newest entry shown is the one open pages ask the endpoint about.
+		$this->assertStringContainsString( '"latest":300', $html );
+	}
+
+	public function test_each_live_blog_counts_only_its_own_entries(): void {
+		$this->render_container( array( 'isLive' => true ) );
+
+		$html = $this->render_container( array( 'isLive' => true ), array() )['html'];
+
+		$this->assertStringContainsString( '>0 updates</span>', $html );
+		$this->assertStringContainsString( '"latest":0', $html );
 	}
 
 	public function test_container_after_coverage_ends_stops_polling(): void {

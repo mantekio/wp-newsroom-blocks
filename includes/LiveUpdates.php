@@ -71,20 +71,31 @@ final class LiveUpdates {
 	private static int $untimed = 0;
 
 	/**
+	 * The timestamp of each entry the live blog being rendered has shown, in document order, so its
+	 * header counts exactly the entries on the page.
+	 *
+	 * @var list<int>
+	 */
+	private static array $shown = array();
+
+	/**
 	 * Renders the container on the front end.
 	 *
 	 * @param array<string, mixed> $attributes Block attributes.
 	 * @param string               $content    The rendered entries.
-	 * @param WP_Block|null        $block      Block instance, which carries the post ID and the parsed entries.
+	 * @param WP_Block|null        $block      Block instance, which carries the post ID.
 	 */
 	public static function render( array $attributes, string $content, ?WP_Block $block = null ): string {
-		// The entries render before their container, so the next live blog on the page starts afresh.
+		// The entries render before their container, so by now each one shown has been noted. The count and
+		// the newest time are taken from those, with nothing rendered a second time.
+		$summary = self::summarize( self::$shown, 0 );
+
+		// The next live blog on the page starts afresh.
 		self::$anchors = array();
 		self::$untimed = 0;
+		self::$shown   = array();
 
 		$post_id  = isset( $block->context['postId'] ) ? (int) $block->context['postId'] : (int) get_the_ID();
-		$entries  = $block instanceof WP_Block ? ( $block->parsed_block['innerBlocks'] ?? array() ) : array();
-		$summary  = self::summarize( self::timestamps( $entries ), 0 );
 		$is_live  = ! empty( $attributes['isLive'] ) && $post_id > 0;
 		$interval = max( self::MIN_INTERVAL, (int) ( $attributes['pollInterval'] ?? 30 ) );
 
@@ -134,7 +145,8 @@ final class LiveUpdates {
 
 	/**
 	 * Renders one entry: its time, a "how long ago" label that stays current, and its content.
-	 * An entry left empty in the editor renders nothing, and is not counted.
+	 * An entry whose blocks render nothing, such as one left empty in the editor, renders nothing
+	 * itself, and is not counted.
 	 *
 	 * @param array<string, mixed> $attributes Block attributes.
 	 * @param string               $content    The rendered inner blocks.
@@ -146,6 +158,9 @@ final class LiveUpdates {
 
 		$timestamp = max( 0, (int) ( $attributes['timestamp'] ?? 0 ) );
 		$important = ! empty( $attributes['important'] );
+
+		// For the header of the live blog, which renders next.
+		self::$shown[] = $timestamp;
 
 		$meta = '';
 		if ( $timestamp > 0 ) {
@@ -255,11 +270,11 @@ final class LiveUpdates {
 	}
 
 	/**
-	 * A post's live blog in brief: the timestamp of each entry, and whether coverage is live.
-	 * A post without a live blog counts as not live, so pages stop checking it.
+	 * A post's live blog in brief: the timestamp of each entry with something to show, and whether
+	 * coverage is live. A post without a live blog counts as not live, so pages stop checking it.
 	 *
 	 * The result is kept in the object cache under a hash of the content, so with a persistent
-	 * object cache the post is parsed again only when it changes.
+	 * object cache the post is parsed and its entries rendered again only when it changes.
 	 *
 	 * @param WP_Post $post The post holding the live blog.
 	 * @return array{timestamps: list<int>, isLive: bool}
@@ -276,7 +291,7 @@ final class LiveUpdates {
 
 		$container = self::find_container( parse_blocks( $post->post_content ) );
 		$live_blog = array(
-			'timestamps' => self::timestamps( $container['innerBlocks'] ?? array() ),
+			'timestamps' => self::timestamps( $container['innerBlocks'] ?? array(), $post ),
 			// The block saves isLive only when it differs from the default, which is live.
 			'isLive'     => null !== $container && false !== ( $container['attrs']['isLive'] ?? true ),
 		);
@@ -306,18 +321,32 @@ final class LiveUpdates {
 	}
 
 	/**
-	 * The timestamp of every entry with content, in document order. Entries not yet stamped count as 0.
+	 * The timestamp of every entry with something to show, in document order. Entries not yet
+	 * stamped count as 0.
+	 *
+	 * Each entry is judged as the page judges it, by what its blocks render, with the post as the
+	 * current post, as it is on the page. What a block saves can say otherwise: an Image block saved
+	 * before its file was chosen renders nothing, and a gallery of the images attached to the post
+	 * saves nothing but renders them.
 	 *
 	 * @param array<array-key, array<string, mixed>> $entries Parsed inner blocks of the container.
+	 * @param WP_Post                                $post    The post holding the live blog.
 	 * @return list<int>
 	 */
-	public static function timestamps( array $entries ): array {
+	public static function timestamps( array $entries, WP_Post $post ): array {
+		$current         = $GLOBALS['post'] ?? null;
+		$GLOBALS['post'] = $post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Put back in the finally block below.
+
 		$timestamps = array();
-		foreach ( $entries as $parsed ) {
-			if ( self::ENTRY_BLOCK !== ( $parsed['blockName'] ?? null ) || self::is_blank( self::saved_html( $parsed ) ) ) {
-				continue;
+		try {
+			foreach ( $entries as $parsed ) {
+				if ( self::ENTRY_BLOCK !== ( $parsed['blockName'] ?? null ) || self::is_blank( self::rendered_content( $parsed ) ) ) {
+					continue;
+				}
+				$timestamps[] = max( 0, (int) ( $parsed['attrs']['timestamp'] ?? 0 ) );
 			}
-			$timestamps[] = max( 0, (int) ( $parsed['attrs']['timestamp'] ?? 0 ) );
+		} finally {
+			$GLOBALS['post'] = $current; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- The post that was current before.
 		}
 
 		return $timestamps;
@@ -326,7 +355,10 @@ final class LiveUpdates {
 	/**
 	 * Whether HTML holds nothing a reader would see: no text, and no image, video, audio or embedded frame.
 	 *
-	 * @param string $html Rendered or saved HTML.
+	 * The editor makes the same check, in isBlank() in content.ts, so that it stamps and counts the
+	 * entries the site shows.
+	 *
+	 * @param string $html Rendered HTML.
 	 */
 	public static function is_blank( string $html ): bool {
 		if ( 1 === preg_match( '/<(?:img|picture|video|audio|iframe|embed|object|svg|canvas)\b/i', $html ) ) {
@@ -453,15 +485,15 @@ final class LiveUpdates {
 	}
 
 	/**
-	 * Everything a parsed block saved, its inner blocks included.
+	 * What the blocks inside a parsed entry render, rendered by WordPress as on the page.
 	 *
-	 * @param array<array-key, mixed> $parsed A parsed block.
+	 * @param array<array-key, mixed> $parsed A parsed entry.
 	 */
-	private static function saved_html( array $parsed ): string {
-		$html = is_string( $parsed['innerHTML'] ?? null ) ? $parsed['innerHTML'] : '';
+	private static function rendered_content( array $parsed ): string {
+		$html = '';
 		foreach ( is_array( $parsed['innerBlocks'] ?? null ) ? $parsed['innerBlocks'] : array() as $inner ) {
 			if ( is_array( $inner ) ) {
-				$html .= self::saved_html( $inner );
+				$html .= render_block( $inner );
 			}
 		}
 

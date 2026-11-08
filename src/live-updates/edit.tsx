@@ -10,7 +10,12 @@ import {
 	useBlockProps,
 	useInnerBlocksProps,
 } from '@wordpress/block-editor';
-import { createBlock, type BlockEditProps } from '@wordpress/blocks';
+import {
+	createBlock,
+	getBlockContent,
+	type Block,
+	type BlockEditProps,
+} from '@wordpress/blocks';
 import {
 	Button,
 	PanelBody,
@@ -21,6 +26,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useRef } from '@wordpress/element';
 import { plus } from '@wordpress/icons';
 
+import { drawsOnRender, isBlank } from './content';
 import './editor.scss';
 
 export type Attributes = {
@@ -36,21 +42,27 @@ type Entry = {
 	filled: boolean;
 };
 
-type InnerBlock = {
-	name: string;
-	attributes: Record< string, unknown >;
-};
+/**
+ * Each block's answer, worked out once: the editor store keeps a block's object until the block
+ * changes, so typing in one block leaves the others' answers standing.
+ */
+const answers = new WeakMap< Block, boolean >();
 
 /**
- * Whether a block inside an entry gives it content. Only an empty paragraph does not.
+ * Whether a block inside an entry gives it something readers will see on the site: a heading
+ * with no text, an image or embed with nothing chosen, or a paragraph of spaces does not.
  *
  * @param block A block inside an entry.
  */
-function givesContent( block: InnerBlock ): boolean {
-	return (
-		block.name !== 'core/paragraph' ||
-		String( block.attributes.content ?? '' ).trim() !== ''
-	);
+function givesContent( block: Block ): boolean {
+	let answer = answers.get( block );
+	if ( answer === undefined ) {
+		answer =
+			drawsOnRender( block ) ||
+			! isBlank( getBlockContent( block ) ?? '' );
+		answers.set( block, answer );
+	}
+	return answer;
 }
 
 /**
