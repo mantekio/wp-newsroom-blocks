@@ -66,6 +66,11 @@ final class LiveUpdates {
 	private static array $anchors = array();
 
 	/**
+	 * Entries without a time in the live blog being rendered, counted so each still gets a key of its own.
+	 */
+	private static int $untimed = 0;
+
+	/**
 	 * Renders the container on the front end.
 	 *
 	 * @param array<string, mixed> $attributes Block attributes.
@@ -75,6 +80,7 @@ final class LiveUpdates {
 	public static function render( array $attributes, string $content, ?WP_Block $block = null ): string {
 		// The entries render before their container, so the next live blog on the page starts afresh.
 		self::$anchors = array();
+		self::$untimed = 0;
 
 		$post_id  = isset( $block->context['postId'] ) ? (int) $block->context['postId'] : (int) get_the_ID();
 		$entries  = $block instanceof WP_Block ? ( $block->parsed_block['innerBlocks'] ?? array() ) : array();
@@ -153,18 +159,30 @@ final class LiveUpdates {
 			$meta .= sprintf( '<span class="wp-block-mantek-live-update__key">%s</span>', esc_html__( 'Key update', 'wp-newsroom-blocks' ) );
 		}
 
+		$anchor = $timestamp > 0 ? self::anchor( $timestamp ) : '';
+
 		$extra = array();
 		if ( $important ) {
 			$extra['class'] = 'is-important';
 		}
-		if ( $timestamp > 0 ) {
-			$extra['id'] = self::anchor( $timestamp );
+		if ( '' !== $anchor ) {
+			$extra['id'] = $anchor;
+		}
+
+		// The key lets the router match each entry with its own fresh copy when it swaps in new
+		// updates. Matched by position instead, an entry would keep the context of the one that
+		// used to sit in its place, and with it that entry's "how long ago" label.
+		$key = $anchor;
+		if ( '' === $key ) {
+			++self::$untimed;
+			$key = 'untimed-' . self::$untimed;
 		}
 
 		// tabindex="-1" lets the page move focus to an entry once it is shown, without adding it to the tab order.
 		return sprintf(
-			'<article %1$s tabindex="-1" %2$s><header class="wp-block-mantek-live-update__meta">%3$s</header><div class="wp-block-mantek-live-update__content">%4$s</div></article>',
+			'<article %1$s tabindex="-1" data-wp-key="%2$s" %3$s><header class="wp-block-mantek-live-update__meta">%4$s</header><div class="wp-block-mantek-live-update__content">%5$s</div></article>',
 			get_block_wrapper_attributes( $extra ),
+			esc_attr( $key ),
 			wp_interactivity_data_wp_context( array( 'timestamp' => $timestamp ) ),
 			$meta,
 			$content

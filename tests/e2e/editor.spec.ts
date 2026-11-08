@@ -225,6 +225,13 @@ test.describe( 'In the editor', () => {
 		const [ newer, older ] = await stamps( editor );
 		expect( older ).toBeGreaterThan( 0 );
 		expect( newer ).toBeGreaterThan( older );
+
+		// An entry left empty is not published, so the count leaves it out, as the site does.
+		await container
+			.getByRole( 'button', { name: 'Add an update' } )
+			.click();
+		await expect( entries ).toHaveCount( 3 );
+		await expect( container.getByText( '2 updates' ) ).toBeVisible();
 	} );
 
 	test( 'a duplicated update gets a time of its own', async ( {

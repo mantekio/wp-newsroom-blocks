@@ -310,6 +310,7 @@ final class LiveUpdatesTest extends TestCase {
 		$this->assertStringContainsString( sprintf( '<time class="wp-block-mantek-live-update__time" datetime="%s">', gmdate( 'c', $timestamp ) ), $html );
 		$this->assertStringContainsString( 'data-wp-text="state.relativeTime"', $html );
 		$this->assertStringContainsString( sprintf( 'id="update-%d"', $timestamp ), $html );
+		$this->assertStringContainsString( sprintf( 'data-wp-key="update-%d"', $timestamp ), $html );
 		$this->assertStringContainsString( 'class="is-important"', $html );
 		$this->assertStringContainsString( '>Key update</span>', $html );
 		$this->assertStringContainsString( sprintf( "data-wp-context='{\"timestamp\":%d}'", $timestamp ), $html );
@@ -330,10 +331,29 @@ final class LiveUpdatesTest extends TestCase {
 
 		$this->assertStringContainsString( 'id="update-1234567"', $first );
 		$this->assertStringContainsString( 'id="update-1234567-2"', $second );
+		// The router matches entries by these keys, so they must be as unique as the anchors.
+		$this->assertStringContainsString( 'data-wp-key="update-1234567"', $first );
+		$this->assertStringContainsString( 'data-wp-key="update-1234567-2"', $second );
 
 		// Each live blog's anchors are its own: rendering the container starts the count again.
 		$this->render_container( array( 'isLive' => true ) );
 		$this->assertStringContainsString( 'id="update-1234567"', LiveUpdates::render_entry( array( 'timestamp' => 1_234_567 ), '<p>Again.</p>' ) );
+	}
+
+	public function test_entries_without_a_time_still_get_keys_of_their_own(): void {
+		$this->render_container( array( 'isLive' => true ) );
+
+		$first  = LiveUpdates::render_entry( array(), '<p>First.</p>' );
+		$second = LiveUpdates::render_entry( array(), '<p>Second.</p>' );
+
+		$this->assertStringContainsString( 'data-wp-key="untimed-1"', $first );
+		$this->assertStringContainsString( 'data-wp-key="untimed-2"', $second );
+		// No time, so no anchor to link to.
+		$this->assertStringNotContainsString( ' id="', $first );
+
+		// Each live blog's keys are its own, like its anchors.
+		$this->render_container( array( 'isLive' => true ) );
+		$this->assertStringContainsString( 'data-wp-key="untimed-1"', LiveUpdates::render_entry( array(), '<p>Again.</p>' ) );
 	}
 
 	public function test_time_includes_the_date_for_earlier_days(): void {

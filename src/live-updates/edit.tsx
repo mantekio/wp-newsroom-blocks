@@ -149,7 +149,9 @@ export default function Edit( {
 		[ clientId ]
 	);
 	useEntryTimes( signature );
-	const count = signature ? signature.split( ',' ).length : 0;
+	const entries = parseEntries( signature );
+	// An entry left empty is not published, so the count leaves it out, as the site does.
+	const count = entries.filter( ( entry ) => entry.filled ).length;
 
 	const { insertBlock, selectBlock } = useDispatch( blockEditorStore );
 
@@ -252,7 +254,7 @@ export default function Edit( {
 						icon={ plus }
 						onClick={ addUpdate }
 					>
-						{ count === 0
+						{ entries.length === 0
 							? __( 'Add the first update', 'wp-newsroom-blocks' )
 							: __( 'Add an update', 'wp-newsroom-blocks' ) }
 					</Button>

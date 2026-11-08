@@ -3,11 +3,24 @@
  */
 import { expect, test } from '@wordpress/e2e-test-utils-playwright';
 
+import { elapsed } from '../../src/live-updates/format';
 import { installTimers, openStory, scrollDirection, tick } from './story';
 
 type Post = { id: number; content: { raw: string } };
 
 const LIVE_BLOG = '<!-- wp:mantek/live-updates {"pollInterval":15} -->\n';
+
+/**
+ * The English "how long ago" label for an age, rounded as the plugin rounds it.
+ *
+ * @param seconds Seconds since the update.
+ */
+function englishLabel( seconds: number ): string {
+	const [ unit, value ] = elapsed( seconds );
+	return unit === 'now'
+		? 'just now'
+		: `${ value } ${ unit }${ value === 1 ? '' : 's' } ago`;
+}
 
 test.describe( 'On the front end', () => {
 	test.use( { storageState: { cookies: [], origins: [] } } );
@@ -224,6 +237,34 @@ test.describe( 'On the front end', () => {
 							.sameDocument
 				)
 			).toBe( true );
+
+			// Each label counts from its own entry's time, not from the entry that sat in its
+			// place before the swap. The page's clock moves every 30 seconds, so a label may be
+			// up to that far behind the real age.
+			const rows = await entries.evaluateAll( ( articles ) =>
+				articles.map( ( article ) => ( {
+					datetime:
+						article
+							.querySelector( 'time' )
+							?.getAttribute( 'datetime' ) ?? '',
+					label:
+						article.querySelector(
+							'.wp-block-mantek-live-update__ago'
+						)?.textContent ?? '',
+				} ) )
+			);
+			const now = Date.now() / 1000;
+			for ( const { datetime, label } of rows ) {
+				const age = Math.round( now - Date.parse( datetime ) / 1000 );
+				const expected = new Set< string >();
+				for ( let lag = -2; lag <= 35; lag++ ) {
+					expected.add( englishLabel( age - lag ) );
+				}
+				expect(
+					[ ...expected ],
+					`the label of ${ datetime }`
+				).toContain( label );
+			}
 		} finally {
 			await requestUtils.rest( {
 				method: 'POST',
