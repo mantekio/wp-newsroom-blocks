@@ -41,26 +41,26 @@ msgstr "https://www.mantek.io"
 msgid "Breaking"
 msgstr "عاجل"
 
-#: includes/BreakingNews.php:86
+#: includes/BreakingNews.php:88
 msgid "Pause the headlines"
 msgstr "إيقاف العناوين مؤقتاً"
 
-#: includes/BreakingNews.php:87
+#: includes/BreakingNews.php:89
 msgid "Close the breaking news bar"
 msgstr "إغلاق شريط الأخبار العاجلة"
 
-#: includes/LiveUpdates.php:78
+#: includes/LiveUpdates.php:121
 #: build/live-updates/index.js:1
 msgid "Live"
 msgstr "مباشر"
 
-#: includes/LiveUpdates.php:79
+#: includes/LiveUpdates.php:123
 #: build/live-updates/index.js:1
 msgid "Coverage ended"
 msgstr "انتهت التغطية"
 
 #. translators: %s: number of updates in the live blog.
-#: includes/LiveUpdates.php:83
+#: includes/LiveUpdates.php:89
 #: build/live-updates/index.js:2
 #, php-format,js-format
 msgid "%s update"
@@ -72,21 +72,21 @@ msgstr[3] "%s تحديثات"
 msgstr[4] "%s تحديثاً"
 msgstr[5] "%s تحديث"
 
-#: includes/LiveUpdates.php:104
+#: includes/LiveUpdates.php:116
 msgid "Live updates"
 msgstr "التحديثات المباشرة"
 
-#: includes/LiveUpdates.php:133
+#: includes/LiveUpdates.php:153
 #: build/live-update/index.js:1
 msgid "Key update"
 msgstr "تحديث مهم"
 
-#: includes/LiveUpdates.php:188
+#: includes/LiveUpdates.php:209
 msgid "Invalid post ID."
 msgstr "معرّف المقالة غير صالح."
 
 #. translators: %s: number of new updates waiting to be shown.
-#: includes/LiveUpdates.php:317
+#: includes/LiveUpdates.php:466
 #, php-format
 msgid "Show %s new update"
 msgid_plural "Show %s new updates"
@@ -97,17 +97,11 @@ msgstr[3] "عرض %s تحديثات جديدة"
 msgstr[4] "عرض %s تحديثاً جديداً"
 msgstr[5] "عرض %s تحديث جديد"
 
-#. translators: %s: how long ago an update was posted, such as "5 mins".
-#: includes/LiveUpdates.php:333
-#, php-format
-msgid "%s ago"
-msgstr "قبل %s"
-
-#: includes/Plugin.php:84
+#: includes/Plugin.php:150
 msgid "Newsroom"
 msgstr "غرفة الأخبار"
 
-#: includes/ReadAlso.php:46
+#: includes/ReadAlso.php:48
 #: build/read-also/index.js:1
 msgid "Read also"
 msgstr "اقرأ أيضاً"
@@ -153,6 +147,7 @@ msgstr[4] "لم يُنشر شيء خلال آخر %d ساعة، لذا الشر�
 msgstr[5] "لم يُنشر شيء خلال آخر %d ساعة، لذا الشريط مخفي على الموقع حالياً."
 
 #: build/live-update/index.js:1
+#: build/live-updates/index.js:2
 msgid "What is the latest?"
 msgstr "ما آخر المستجدات؟"
 
@@ -192,6 +187,8 @@ msgstr "فترة البحث عن تحديثات جديدة (بالثواني)"
 msgid "Add an update"
 msgstr "إضافة تحديث"
 
+#: includes/Plugin.php:104
+#: build/breaking-news/index.js:1
 #: build/read-also/index.js:1
 msgid "(no title)"
 msgstr "(بدون عنوان)"
@@ -393,3 +390,48 @@ msgstr "أحداث"
 msgctxt "block keyword"
 msgid "sequence"
 msgstr "تسلسل"
+
+#: includes/LiveUpdates.php:399
+#: includes/LiveUpdates.php:463
+msgid "just now"
+msgstr "الآن"
+
+#. translators: %s: number of minutes.
+#: includes/LiveUpdates.php:414
+#, php-format
+msgid "%s minute ago"
+msgid_plural "%s minutes ago"
+msgstr[0] "قبل %s دقيقة"
+msgstr[1] "قبل دقيقة واحدة"
+msgstr[2] "قبل دقيقتين"
+msgstr[3] "قبل %s دقائق"
+msgstr[4] "قبل %s دقيقة"
+msgstr[5] "قبل %s دقيقة"
+
+#. translators: %s: number of hours.
+#: includes/LiveUpdates.php:418
+#, php-format
+msgid "%s hour ago"
+msgid_plural "%s hours ago"
+msgstr[0] "قبل %s ساعة"
+msgstr[1] "قبل ساعة واحدة"
+msgstr[2] "قبل ساعتين"
+msgstr[3] "قبل %s ساعات"
+msgstr[4] "قبل %s ساعة"
+msgstr[5] "قبل %s ساعة"
+
+#. translators: %s: number of days.
+#: includes/LiveUpdates.php:422
+#, php-format
+msgid "%s day ago"
+msgid_plural "%s days ago"
+msgstr[0] "قبل %s يوم"
+msgstr[1] "قبل يوم واحد"
+msgstr[2] "قبل يومين"
+msgstr[3] "قبل %s أيام"
+msgstr[4] "قبل %s يوماً"
+msgstr[5] "قبل %s يوم"
+
+#: build/live-updates/index.js:2
+msgid "Add the first update"
+msgstr "إضافة أول تحديث"

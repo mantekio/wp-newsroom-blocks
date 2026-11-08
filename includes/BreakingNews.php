@@ -51,7 +51,7 @@ final class BreakingNews {
 		$copy  = '';
 		foreach ( $posts as $post ) {
 			$url    = esc_url( (string) get_permalink( $post ) );
-			$title  = esc_html( get_the_title( $post ) );
+			$title  = Plugin::title_html( $post );
 			$items .= sprintf( '<li class="wp-block-mantek-breaking-news__item"><a href="%1$s">%2$s</a></li>', $url, $title );
 			// The second copy makes the loop seamless. It is hidden from assistive technology and the tab order.
 			$copy .= sprintf( '<li class="wp-block-mantek-breaking-news__item"><a href="%1$s" tabindex="-1">%2$s</a></li>', $url, $title );
@@ -61,7 +61,7 @@ final class BreakingNews {
 		wp_interactivity_state( self::STORE, array( 'isReady' => false ) );
 
 		return sprintf(
-			'<div %1$s role="region" aria-label="%2$s" data-wp-interactive="%3$s" %4$s data-wp-init="callbacks.measure" data-wp-class--is-paused="context.paused" data-wp-bind--hidden="context.dismissed">'
+			'<div %1$s role="region" aria-label="%2$s" data-wp-interactive="%3$s" %4$s data-wp-init="callbacks.measure" data-wp-class--is-paused="context.paused" data-wp-class--is-still="context.still" data-wp-bind--hidden="context.dismissed">'
 				. '<strong class="wp-block-mantek-breaking-news__label">%5$s</strong>'
 				. '<div class="wp-block-mantek-breaking-news__viewport">'
 				. '<ul class="wp-block-mantek-breaking-news__track">%6$s</ul>'
@@ -77,6 +77,8 @@ final class BreakingNews {
 				array(
 					'paused'    => false,
 					'dismissed' => false,
+					// Set in the browser when the headlines fit without scrolling.
+					'still'     => false,
 					'speed'     => $speed,
 				)
 			),
@@ -96,7 +98,7 @@ final class BreakingNews {
 	 *
 	 * @param array<string, mixed> $attributes Block attributes.
 	 * @param int                  $now        Current Unix time.
-	 * @return array<string, mixed>
+	 * @return array{post_type: 'post', post_status: 'publish', posts_per_page: int, orderby: 'date', order: 'DESC', ignore_sticky_posts: true, no_found_rows: true, update_post_meta_cache: false, suppress_filters: false, fields: 'all', date_query: list<array{column: 'post_date_gmt', after: string, inclusive: true}>, cat?: int}
 	 */
 	public static function query_args( array $attributes, int $now ): array {
 		$count = min( self::MAX_ITEMS, max( 1, (int) ( $attributes['count'] ?? 5 ) ) );
@@ -104,15 +106,18 @@ final class BreakingNews {
 		$since = $now - ( $now % MINUTE_IN_SECONDS ) - $hours * HOUR_IN_SECONDS;
 
 		$args = array(
-			'post_type'           => 'post',
-			'post_status'         => 'publish',
-			'posts_per_page'      => $count,
-			'orderby'             => 'date',
-			'order'               => 'DESC',
-			'ignore_sticky_posts' => true,
-			'no_found_rows'       => true,
-			'suppress_filters'    => false,
-			'date_query'          => array(
+			'post_type'              => 'post',
+			'post_status'            => 'publish',
+			'posts_per_page'         => $count,
+			'orderby'                => 'date',
+			'order'                  => 'DESC',
+			'ignore_sticky_posts'    => true,
+			'no_found_rows'          => true,
+			// The bar shows titles and links only, so post meta is never read.
+			'update_post_meta_cache' => false,
+			'suppress_filters'       => false,
+			'fields'                 => 'all',
+			'date_query'             => array(
 				array(
 					'column'    => 'post_date_gmt',
 					'after'     => gmdate( 'Y-m-d H:i:s', $since ),

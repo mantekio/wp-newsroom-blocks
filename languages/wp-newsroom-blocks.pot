@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-04T13:43:16+00:00\n"
+"POT-Creation-Date: 2026-11-07T22:21:58+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-newsroom-blocks\n"
@@ -44,26 +44,16 @@ msgstr ""
 msgid "Breaking"
 msgstr ""
 
-#: includes/BreakingNews.php:86
+#: includes/BreakingNews.php:88
 msgid "Pause the headlines"
 msgstr ""
 
-#: includes/BreakingNews.php:87
+#: includes/BreakingNews.php:89
 msgid "Close the breaking news bar"
 msgstr ""
 
-#: includes/LiveUpdates.php:78
-#: build/live-updates/index.js:1
-msgid "Live"
-msgstr ""
-
-#: includes/LiveUpdates.php:79
-#: build/live-updates/index.js:1
-msgid "Coverage ended"
-msgstr ""
-
 #. translators: %s: number of updates in the live blog.
-#: includes/LiveUpdates.php:83
+#: includes/LiveUpdates.php:89
 #: build/live-updates/index.js:2
 #, php-format,js-format
 msgid "%s update"
@@ -71,38 +61,77 @@ msgid_plural "%s updates"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/LiveUpdates.php:104
+#: includes/LiveUpdates.php:116
 msgid "Live updates"
 msgstr ""
 
-#: includes/LiveUpdates.php:133
+#: includes/LiveUpdates.php:121
+#: build/live-updates/index.js:1
+msgid "Live"
+msgstr ""
+
+#: includes/LiveUpdates.php:123
+#: build/live-updates/index.js:1
+msgid "Coverage ended"
+msgstr ""
+
+#: includes/LiveUpdates.php:153
 #: build/live-update/index.js:1
 msgid "Key update"
 msgstr ""
 
-#: includes/LiveUpdates.php:188
+#: includes/LiveUpdates.php:209
 msgid "Invalid post ID."
 msgstr ""
 
+#: includes/LiveUpdates.php:399
+#: includes/LiveUpdates.php:463
+msgid "just now"
+msgstr ""
+
+#. translators: %s: number of minutes.
+#: includes/LiveUpdates.php:414
+#, php-format
+msgid "%s minute ago"
+msgid_plural "%s minutes ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of hours.
+#: includes/LiveUpdates.php:418
+#, php-format
+msgid "%s hour ago"
+msgid_plural "%s hours ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of days.
+#: includes/LiveUpdates.php:422
+#, php-format
+msgid "%s day ago"
+msgid_plural "%s days ago"
+msgstr[0] ""
+msgstr[1] ""
+
 #. translators: %s: number of new updates waiting to be shown.
-#: includes/LiveUpdates.php:317
+#: includes/LiveUpdates.php:466
 #, php-format
 msgid "Show %s new update"
 msgid_plural "Show %s new updates"
 msgstr[0] ""
 msgstr[1] ""
 
-#. translators: %s: how long ago an update was posted, such as "5 mins".
-#: includes/LiveUpdates.php:333
-#, php-format
-msgid "%s ago"
+#: includes/Plugin.php:104
+#: build/breaking-news/index.js:1
+#: build/read-also/index.js:1
+msgid "(no title)"
 msgstr ""
 
-#: includes/Plugin.php:84
+#: includes/Plugin.php:150
 msgid "Newsroom"
 msgstr ""
 
-#: includes/ReadAlso.php:46
+#: includes/ReadAlso.php:48
 #: build/read-also/index.js:1
 msgid "Read also"
 msgstr ""
@@ -144,6 +173,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: build/live-update/index.js:1
+#: build/live-updates/index.js:2
 msgid "What is the latest?"
 msgstr ""
 
@@ -180,11 +210,11 @@ msgid "Check for new updates every (seconds)"
 msgstr ""
 
 #: build/live-updates/index.js:2
-msgid "Add an update"
+msgid "Add the first update"
 msgstr ""
 
-#: build/read-also/index.js:1
-msgid "(no title)"
+#: build/live-updates/index.js:2
+msgid "Add an update"
 msgstr ""
 
 #: build/read-also/index.js:1

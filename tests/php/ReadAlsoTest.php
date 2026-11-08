@@ -43,6 +43,9 @@ final class ReadAlsoTest extends TestCase {
 		$this->assertSame( 'publish', $args['post_status'] );
 		$this->assertSame( 2, $args['posts_per_page'] );
 		$this->assertFalse( $args['suppress_filters'] );
+		// Post meta is read only for featured images.
+		$this->assertFalse( $args['update_post_meta_cache'] );
+		$this->assertTrue( ReadAlso::query_args( array( 9 ), true )['update_post_meta_cache'] );
 	}
 
 	public function test_renders_nothing_without_chosen_articles(): void {
@@ -64,13 +67,13 @@ final class ReadAlsoTest extends TestCase {
 					array(
 						'ID'         => 12,
 						'post_title' => 'Second <em>story</em>',
-					) 
+					)
 				),
 				new WP_Post(
 					array(
 						'ID'         => 7,
 						'post_title' => 'First story',
-					) 
+					)
 				),
 			)
 		);
@@ -81,6 +84,8 @@ final class ReadAlsoTest extends TestCase {
 		$this->assertStringContainsString( 'id="wp-block-mantek-read-also-1">Read also</p>', $html );
 		$this->assertLessThan( strpos( $html, '?p=7' ), strpos( $html, '?p=12' ) );
 		$this->assertStringNotContainsString( '<img', $html );
+		// Markup in a title is formatting, as WordPress shows it, not text.
+		$this->assertStringContainsString( '<span class="wp-block-mantek-read-also__title">Second <em>story</em></span>', $html );
 	}
 
 	public function test_never_links_a_story_to_itself(): void {
@@ -93,9 +98,9 @@ final class ReadAlsoTest extends TestCase {
 						array(
 							'ID'         => 7,
 							'post_title' => 'Other',
-						) 
+						)
 					),
-				) 
+				)
 			);
 
 		$block = new WP_Block( array(), array( 'postId' => 12 ) );
@@ -104,16 +109,19 @@ final class ReadAlsoTest extends TestCase {
 	}
 
 	public function test_uses_a_custom_heading_and_shows_thumbnails_when_asked(): void {
-		Functions\expect( 'get_posts' )->once()->andReturn(
-			array(
-				new WP_Post(
-					array(
-						'ID'         => 3,
-						'post_title' => 'Story',
-					) 
-				),
-			) 
-		);
+		Functions\expect( 'get_posts' )
+			->once()
+			->with( \Mockery::on( static fn ( array $args ): bool => true === $args['update_post_meta_cache'] ) )
+			->andReturn(
+				array(
+					new WP_Post(
+						array(
+							'ID'         => 3,
+							'post_title' => 'Story',
+						)
+					),
+				)
+			);
 
 		$html = ReadAlso::render(
 			array(

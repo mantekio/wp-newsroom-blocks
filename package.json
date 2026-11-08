@@ -34,10 +34,10 @@
 		"test:e2e": "playwright test",
 		"playground": "wp-playground-cli server --mount=.:/wordpress/wp-content/plugins/wp-newsroom-blocks --blueprint=tests/e2e/blueprint.json --login --port=9400",
 		"i18n": "npm run i18n:pot && npm run i18n:mo && npm run i18n:json",
-		"i18n:pot": "wp i18n make-pot . languages/wp-newsroom-blocks.pot --exclude=node_modules,vendor,tests,src --domain=wp-newsroom-blocks",
+		"i18n:pot": "wp i18n make-pot . languages/wp-newsroom-blocks.pot --exclude=node_modules,vendor,tests,src,artifacts --domain=wp-newsroom-blocks --headers='{\"Report-Msgid-Bugs-To\":\"https://github.com/mantekio/wp-newsroom-blocks/issues\"}'",
 		"i18n:mo": "wp i18n make-mo languages",
 		"i18n:json": "wp i18n make-json languages --no-purge --pretty-print",
-		"plugin-zip": "wp-scripts plugin-zip"
+		"plugin-zip": "git archive --format=zip --prefix=wp-newsroom-blocks/ --output=wp-newsroom-blocks.zip HEAD"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.64.1",

@@ -41,6 +41,17 @@
 		background: currentcolor;
 	}
 
+	// An event left empty in the editor (no date label, heading or content)
+	// shows nothing on the site rather than a lone marker. The editor still
+	// shows it, so that it can be filled in.
+	&:not(.block-editor-block-list__block):not(:has(
+		.wp-block-mantek-timeline-event__time,
+		.wp-block-mantek-timeline-event__heading,
+		.wp-block-mantek-timeline-event__content > :not(:empty)
+	)) {
+		display: none;
+	}
+
 	.wp-block-mantek-timeline-event__time {
 		display: block;
 		font-size: 0.875em;

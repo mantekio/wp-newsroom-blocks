@@ -8,5 +8,7 @@
  * @var WP_Block             $block      Block instance.
  */
 
+defined( 'ABSPATH' ) || exit;
+
 // Everything is escaped inside ReadAlso::render().
 echo \ManTek\NewsroomBlocks\ReadAlso::render( $attributes, $block ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

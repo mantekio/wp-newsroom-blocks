@@ -1,6 +1,6 @@
 /**
- * Editor UI for one live update: stamped with the time it was added, which editors can change,
- * and optionally marked as a key update.
+ * Editor UI for one live update: stamped by its Live updates block with the time it got its
+ * first content, which editors can change, and optionally marked as a key update.
  */
 import { __ } from '@wordpress/i18n';
 import {
@@ -16,7 +16,6 @@ import {
 	ToolbarGroup,
 } from '@wordpress/components';
 import { date, dateI18n, getDate, getSettings } from '@wordpress/date';
-import { useEffect } from '@wordpress/element';
 import { scheduled, starEmpty, starFilled } from '@wordpress/icons';
 
 import type { BlockTemplate } from '../shared/types';
@@ -50,13 +49,6 @@ export default function Edit( {
 }: BlockEditProps< Attributes > ) {
 	const { timestamp, important } = attributes;
 	const { formats } = getSettings();
-
-	// A new entry is stamped with the moment it was added.
-	useEffect( () => {
-		if ( ! timestamp ) {
-			setAttributes( { timestamp: Math.floor( Date.now() / 1000 ) } );
-		}
-	}, [ timestamp, setAttributes ] );
 
 	const blockProps = useBlockProps( {
 		className: important ? 'is-important' : undefined,

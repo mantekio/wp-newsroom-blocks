@@ -39,6 +39,12 @@ $mantek-live-red: #c8102e;
 		opacity: 0.75;
 	}
 
+	// Both states are in the page; the one that does not apply is hidden.
+	.wp-block-mantek-live-updates__badge[hidden],
+	.wp-block-mantek-live-updates__ended[hidden] {
+		display: none;
+	}
+
 	.wp-block-mantek-live-updates__count {
 		font-weight: 400;
 	}

@@ -1,4 +1,6 @@
-// Editor only.
-.wp-block-mantek-live-updates__add {
-	margin-block-end: 1rem;
+// Editor only. The button sits at the end of the header, out of the way of
+// the toolbar that a selected entry shows above its start edge.
+.wp-block-mantek-live-updates .wp-block-mantek-live-updates__add {
+	margin-inline-start: auto;
+	font-weight: 400;
 }

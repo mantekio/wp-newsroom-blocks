@@ -10,6 +10,9 @@
 		"author": "ManTek Technologies",
 		"description": "The same demo story on an Arabic, right-to-left site."
 	},
+	"constants": {
+		"AUTOMATIC_UPDATER_DISABLED": true
+	},
 	"steps": [
 		{
 			"step": "installPlugin",

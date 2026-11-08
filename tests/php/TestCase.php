@@ -23,6 +23,14 @@ abstract class TestCase extends PHPUnitTestCase {
 		Functions\stubTranslationFunctions();
 		Functions\stubEscapeFunctions();
 		Functions\when( 'wp_strip_all_tags' )->alias( 'strip_tags' );
+		// Close enough to KSES for these tests: the allowed tags stay, every other tag goes, text stays.
+		Functions\when( 'wp_kses' )->alias(
+			// phpcs:ignore WordPressVIPMinimum.Functions.StripTags.StripTagsTwoParameters -- A stand-in for wp_kses(), which these tests cannot load.
+			static fn ( string $html, array $allowed ): string => strip_tags( $html, array_keys( $allowed ) )
+		);
+		// No translation is loaded, as on an English site.
+		Functions\when( 'is_textdomain_loaded' )->justReturn( false );
+		Functions\when( 'determine_locale' )->justReturn( 'en_US' );
 		Functions\when( 'get_block_wrapper_attributes' )->alias(
 			static function ( array $extra = array() ): string {
 				$attributes = '';

@@ -15,6 +15,7 @@ require $root . '/vendor/autoload.php';
 define( 'ABSPATH', '/tmp/wordpress/' );
 define( 'MINUTE_IN_SECONDS', 60 );
 define( 'HOUR_IN_SECONDS', 3600 );
+define( 'DAY_IN_SECONDS', 86400 );
 define( 'ManTek\NewsroomBlocks\PLUGIN_FILE', $root . '/wp-newsroom-blocks.php' );
 
 require __DIR__ . '/stubs.php';

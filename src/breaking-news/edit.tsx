@@ -20,6 +20,7 @@ import { useSelect } from '@wordpress/data';
 import { useMemo } from '@wordpress/element';
 import { decodeEntities } from '@wordpress/html-entities';
 
+import { titleText } from '../shared/title';
 import './editor.scss';
 
 export type Attributes = {
@@ -46,9 +47,12 @@ export default function Edit( {
 }: BlockEditProps< Attributes > ) {
 	const { label, categoryId, count, maxAgeHours, speed } = attributes;
 
+	// The view context, which every author can read. In the editor's default, edit, categories
+	// need manage_categories and posts are limited to the ones the current user may edit.
 	const categories = useSelect(
 		( select ) =>
 			( select( coreStore ).getEntityRecords( 'taxonomy', 'category', {
+				context: 'view',
 				per_page: 100,
 				orderby: 'name',
 				_fields: 'id,name',
@@ -69,6 +73,7 @@ export default function Edit( {
 	const { posts, loading } = useSelect(
 		( select ) => {
 			const query = {
+				context: 'view' as const,
 				per_page: count,
 				after,
 				_fields: 'id,title',
@@ -188,7 +193,7 @@ export default function Edit( {
 									key={ post.id }
 									className="wp-block-mantek-breaking-news__item"
 								>
-									{ decodeEntities( post.title.rendered ) }
+									{ titleText( post.title.rendered ) }
 								</li>
 							) ) }
 						</ul>

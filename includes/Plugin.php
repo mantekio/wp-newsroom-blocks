@@ -10,6 +10,7 @@ declare( strict_types = 1 );
 namespace ManTek\NewsroomBlocks;
 
 use WP_Block_Type_Registry;
+use WP_Post;
 
 /**
  * Registers the blocks, their inserter category, translations and the REST route.
@@ -43,18 +44,45 @@ final class Plugin {
 	}
 
 	/**
+	 * Inline formatting a post title may keep when it is shown inside a link. Everything else is dropped.
+	 */
+	private const TITLE_TAGS = array(
+		'abbr'   => array( 'title' => true ),
+		'b'      => array(),
+		'bdi'    => array(),
+		'cite'   => array(),
+		'code'   => array(),
+		'em'     => array(),
+		'i'      => array(),
+		'mark'   => array(),
+		'q'      => array(),
+		's'      => array(),
+		'small'  => array(),
+		'span'   => array(
+			'dir'  => true,
+			'lang' => true,
+		),
+		'strong' => array(),
+		'sub'    => array(),
+		'sup'    => array(),
+	);
+
+	/**
 	 * Lets authors without the unfiltered_html capability keep the timeline's <time> element.
 	 *
 	 * WordPress added <time> to the post allow-list in 6.9. On 6.8 it was stripped when such
 	 * an author saved, which left every dated timeline event an invalid block. On 6.9 and
 	 * later the tag is already allowed and this changes nothing.
 	 *
-	 * @param array<string, array<string, bool>> $tags    Allowed tags and their attributes.
-	 * @param string|array<mixed>                $context The KSES context.
-	 * @return array<string, array<string, bool>>
+	 * The parameters are untyped because other code can call wp_kses() with any context,
+	 * null included, and a filter that rejected it would take the page down.
+	 *
+	 * @param mixed $tags    Allowed tags and their attributes, normally an array.
+	 * @param mixed $context The KSES context, normally a string.
+	 * @return mixed The allowed tags, with <time> added for posts.
 	 */
-	public static function allow_time_element( array $tags, string|array $context ): array {
-		if ( 'post' === $context && ! isset( $tags['time'] ) ) {
+	public static function allow_time_element( mixed $tags, mixed $context = null ): mixed {
+		if ( is_array( $tags ) && 'post' === $context && ! isset( $tags['time'] ) ) {
 			$tags['time'] = array(
 				'class'    => true,
 				'datetime' => true,
@@ -62,6 +90,21 @@ final class Plugin {
 		}
 
 		return $tags;
+	}
+
+	/**
+	 * A post's title as link text: with the inline formatting a title can carry, such as <em>,
+	 * and "(no title)" for an untitled post, so that no link is left without a name.
+	 *
+	 * @param WP_Post $post The post.
+	 */
+	public static function title_html( WP_Post $post ): string {
+		$title = wp_kses( get_the_title( $post ), self::TITLE_TAGS );
+		if ( '' === trim( wp_strip_all_tags( $title ) ) ) {
+			return esc_html__( '(no title)', 'wp-newsroom-blocks' );
+		}
+
+		return $title;
 	}
 
 	/**

@@ -29,6 +29,8 @@ final class BreakingNewsTest extends TestCase {
 		$this->assertSame( '2026-11-04 12:30:00', $args['date_query'][0]['after'] );
 		$this->assertSame( 'post_date_gmt', $args['date_query'][0]['column'] );
 		$this->assertFalse( $args['suppress_filters'] );
+		// Titles and links need no post meta, so the query does not fetch it.
+		$this->assertFalse( $args['update_post_meta_cache'] );
 	}
 
 	/**
@@ -103,5 +105,28 @@ final class BreakingNewsTest extends TestCase {
 		$this->assertStringContainsString( '<ul class="wp-block-mantek-breaking-news__track" aria-hidden="true">', $html );
 		$this->assertSame( 2, substr_count( $html, 'tabindex="-1"' ) );
 		$this->assertStringContainsString( '"speed":80', $html );
+		// Measured in the browser: headlines that fit hold still.
+		$this->assertStringContainsString( '"still":false', $html );
+		$this->assertStringContainsString( 'data-wp-class--is-still="context.still"', $html );
+	}
+
+	public function test_headlines_keep_their_formatting_and_an_untitled_post_gets_a_name(): void {
+		Functions\expect( 'get_posts' )->once()->andReturn(
+			array(
+				new WP_Post(
+					array(
+						'ID'         => 1,
+						'post_title' => 'Talks in <em>Doha</em>',
+					)
+				),
+				new WP_Post( array( 'ID' => 2 ) ),
+			)
+		);
+		Functions\when( 'wp_interactivity_state' )->justReturn( array() );
+
+		$html = BreakingNews::render( array() );
+
+		$this->assertStringContainsString( '<a href="https://example.com/?p=1">Talks in <em>Doha</em></a>', $html );
+		$this->assertStringContainsString( '<a href="https://example.com/?p=2">(no title)</a>', $html );
 	}
 }

@@ -26,7 +26,9 @@ How a story unfolded, one dated event after another. Each event has a date picke
 
 ### Live updates
 
-A live blog. Editors add timestamped updates, newest on top, and can mark key updates. Readers see each update's time and a "how long ago" label that keeps counting, and when new updates are published they get a "Show 2 new updates" button that brings them in **without reloading the page**. Turning off "Coverage is live" shows readers that coverage has ended and stops the checking.
+A live blog. Editors add timestamped updates, newest on top, and can mark key updates. Readers see each update's time and a "how long ago" label that keeps counting, and when new updates are published they get a "Show 2 new updates" button that brings them in **without reloading the page**. Turning off "Coverage is live" shows readers that coverage has ended and stops the checking, on pages they already have open too.
+
+The updates are saved as ordinary blocks, so if the plugin is ever removed they stay in the post as plain content, without their times.
 
 ## Right to left, built in
 
@@ -49,9 +51,9 @@ The blocks appear in the inserter under **Newsroom**.
 ## How it works
 
 - **Server rendering where freshness matters.** Read also, the breaking news bar and the live blog render in PHP on every request, so they always reflect what is published now. The timeline is a static block, because its content belongs to the story.
-- **Interactivity API on the front end.** The pause and close buttons, the "how long ago" labels and the new-updates button use WordPress's Interactivity API. The server renders the labels in full, so readers see "3 minutes ago" before any script runs, and the browser keeps them current after that.
-- **Polling that a CDN can absorb.** The live blog asks a small endpoint, `GET /wp-json/wp-newsroom-blocks/v1/live/<post-id>?after=<timestamp>`, how many entries are newer than the ones on the page. The response is public and cached for 15 seconds, so during a big story a CDN answers most readers, and the parsed post stays in the object cache until the post changes. Polling pauses while the tab is hidden. Private and password-protected posts answer 404.
-- **New updates without a reload.** "Show new updates" uses the Interactivity API router to swap in a fresh server render of the live blog alone. The rest of the page, and the reader's place in it, stay as they were.
+- **Interactivity API on the front end.** The pause and close buttons, the "how long ago" labels and the new-updates button use WordPress's Interactivity API. The server renders the labels in full, so readers see "3 minutes ago" before any script runs, and the browser keeps them current after that, worked out the same way so that no label changes when the scripts take over.
+- **Polling that a CDN can absorb.** The live blog asks a small endpoint, `GET /wp-json/wp-newsroom-blocks/v1/live/<post-id>?after=<timestamp>`, how many entries are newer than the ones on the page. The response is public and cached for 15 seconds, so during a big story a CDN answers most readers, and with a persistent object cache the parsed post is kept until it changes. Polling pauses while the tab is hidden, and stops once coverage ends or the post is no longer public. Private and password-protected posts answer 404.
+- **New updates without a reload, past any page cache.** "Show new updates" fetches a fresh copy of the page with the newest update's time in the address, so a page cache cannot hand back a copy from before the update, yet readers at the same moment still share one cacheable address. The Interactivity API router then swaps in the live blog alone, the rest of the page stays as it was, and keyboard focus moves to the first new update.
 - **Cacheable queries.** The breaking news bar rounds its time cut-off down to the minute, so every page view within that minute runs the same query and the object cache can answer it.
 - **Safe for every author on WordPress 6.8.** WordPress added `<time>` to the post allow-list in 6.9. On 6.8 the plugin adds it, so an author without the `unfiltered_html` capability (any author on multisite) can save dated timeline events without breaking them.
 
@@ -67,6 +69,7 @@ composer analyse      # PHPStan, level 8
 composer test         # PHPUnit with Brain Monkey
 npm run test:e2e      # Playwright, in English and Arabic, on WordPress Playground
 npm run playground    # a local site with the demo story, on port 9400
+npm run plugin-zip    # the release zip, built from the last commit without development files
 ```
 
 The end-to-end tests run on [WordPress Playground](https://wordpress.org/playground/), so they need no Docker. `WP_VERSION` and `PHP_VERSION` choose the versions; CI runs them on WordPress 6.8 with PHP 8.1 and on the latest WordPress.

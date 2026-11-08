@@ -9,5 +9,7 @@
  * @var WP_Block             $block      Block instance.
  */
 
+defined( 'ABSPATH' ) || exit;
+
 // The entries arrive rendered; everything else is escaped inside LiveUpdates::render().
 echo \ManTek\NewsroomBlocks\LiveUpdates::render( $attributes, $content, $block ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

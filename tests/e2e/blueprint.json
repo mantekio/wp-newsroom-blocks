@@ -5,6 +5,9 @@
 		"author": "ManTek Technologies"
 	},
 	"landingPage": "/election-night/",
+	"constants": {
+		"AUTOMATIC_UPDATER_DISABLED": true
+	},
 	"steps": [
 		{
 			"step": "activatePlugin",

@@ -12,6 +12,7 @@
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       wp-newsroom-blocks
  * Domain Path:       /languages
+ * Update URI:        https://github.com/mantekio/wp-newsroom-blocks
  *
  * @package wp-newsroom-blocks
  */

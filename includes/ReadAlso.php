@@ -35,8 +35,10 @@ final class ReadAlso {
 			return '';
 		}
 
+		$show_thumbnails = ! empty( $attributes['showThumbnails'] );
+
 		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.get_posts_get_posts -- query_args() sets suppress_filters to false, so the query is cached.
-		$posts = get_posts( self::query_args( $ids ) );
+		$posts = get_posts( self::query_args( $ids, $show_thumbnails ) );
 		if ( array() === $posts ) {
 			return '';
 		}
@@ -46,8 +48,7 @@ final class ReadAlso {
 			$heading = __( 'Read also', 'wp-newsroom-blocks' );
 		}
 
-		$show_thumbnails = ! empty( $attributes['showThumbnails'] );
-		$items           = '';
+		$items = '';
 		foreach ( $posts as $post ) {
 			$items .= self::item( $post, $show_thumbnails );
 		}
@@ -89,20 +90,22 @@ final class ReadAlso {
 	/**
 	 * Query arguments that fetch the chosen articles, published ones only, in the order the editor set.
 	 *
-	 * @param list<int> $ids Clean post IDs.
-	 * @return array{post__in: list<int>, orderby: 'post__in', post_type: 'post', post_status: 'publish', posts_per_page: int, ignore_sticky_posts: true, no_found_rows: true, suppress_filters: false, fields: 'all'}
+	 * @param list<int> $ids             Clean post IDs.
+	 * @param bool      $with_thumbnails Whether featured images are shown, the only thing that reads post meta.
+	 * @return array{post__in: list<int>, orderby: 'post__in', post_type: 'post', post_status: 'publish', posts_per_page: int, ignore_sticky_posts: true, no_found_rows: true, update_post_meta_cache: bool, suppress_filters: false, fields: 'all'}
 	 */
-	public static function query_args( array $ids ): array {
+	public static function query_args( array $ids, bool $with_thumbnails = false ): array {
 		return array(
-			'post__in'            => $ids,
-			'orderby'             => 'post__in',
-			'post_type'           => 'post',
-			'post_status'         => 'publish',
-			'posts_per_page'      => count( $ids ),
-			'ignore_sticky_posts' => true,
-			'no_found_rows'       => true,
-			'suppress_filters'    => false,
-			'fields'              => 'all',
+			'post__in'               => $ids,
+			'orderby'                => 'post__in',
+			'post_type'              => 'post',
+			'post_status'            => 'publish',
+			'posts_per_page'         => count( $ids ),
+			'ignore_sticky_posts'    => true,
+			'no_found_rows'          => true,
+			'update_post_meta_cache' => $with_thumbnails,
+			'suppress_filters'       => false,
+			'fields'                 => 'all',
 		);
 	}
 
@@ -131,7 +134,7 @@ final class ReadAlso {
 			'<li class="wp-block-mantek-read-also__item"><a class="wp-block-mantek-read-also__link" href="%1$s">%2$s<span class="wp-block-mantek-read-also__title">%3$s</span></a></li>',
 			esc_url( (string) get_permalink( $post ) ),
 			$thumbnail,
-			esc_html( get_the_title( $post ) )
+			Plugin::title_html( $post )
 		);
 	}
 }

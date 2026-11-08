@@ -19,9 +19,9 @@ import { useDebounce } from '@wordpress/compose';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
-import { decodeEntities } from '@wordpress/html-entities';
 import { chevronDown, chevronUp, closeSmall } from '@wordpress/icons';
 
+import { titleText } from '../shared/title';
 import { MAX_POSTS, addPost, movePost, removePost } from './utils';
 import './editor.scss';
 
@@ -48,10 +48,7 @@ const FIELDS = 'id,title';
  * @param post A post from the REST API.
  */
 function titleOf( post: PostRecord ): string {
-	return (
-		decodeEntities( post.title.rendered ) ||
-		__( '(no title)', 'wp-newsroom-blocks' )
-	);
+	return titleText( post.title.rendered );
 }
 
 export default function Edit( {
@@ -70,7 +67,10 @@ export default function Edit( {
 			if ( postIds.length === 0 ) {
 				return { chosen: [] as PostRecord[], chosenLoaded: true };
 			}
+			// The view context lists every published article. The editor's default, edit,
+			// lists only the ones the current user may edit, which for an author is their own.
 			const chosenQuery = {
+				context: 'view' as const,
 				include: postIds,
 				per_page: postIds.length,
 				_fields: FIELDS,
@@ -96,6 +96,7 @@ export default function Edit( {
 				return { results: [] as PostRecord[], searching: false };
 			}
 			const searchQuery = {
+				context: 'view' as const,
 				search: query.trim(),
 				per_page: 8,
 				_fields: FIELDS,

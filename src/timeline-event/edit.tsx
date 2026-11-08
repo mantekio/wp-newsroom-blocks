@@ -17,7 +17,7 @@ import {
 	ToolbarButton,
 	ToolbarGroup,
 } from '@wordpress/components';
-import { dateI18n, getSettings } from '@wordpress/date';
+import { dateI18n, getDate, getSettings } from '@wordpress/date';
 import { calendar } from '@wordpress/icons';
 
 import type { BlockTemplate } from '../shared/types';
@@ -60,9 +60,12 @@ export default function Edit( {
 			setAttributes( { datetime: '' } );
 			return;
 		}
+		// The picker's value has no timezone and means the site's, which getDate() applies.
+		// Read without it, the browser would take it as its own local time, and a pick near
+		// midnight would be labelled with the neighbouring day.
 		setAttributes( {
 			datetime: value,
-			label: dateI18n( formats.date, value, undefined ),
+			label: dateI18n( formats.date, getDate( value ) ),
 		} );
 	};
 
