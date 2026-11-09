@@ -21,3 +21,6 @@
 /vitest.config.mts export-ignore
 /demo export-ignore
 /docs export-ignore
+
+# The WordPress.org banner, icon and screenshots go to the SVN assets folder, never into the zip.
+/.wordpress-org export-ignore
