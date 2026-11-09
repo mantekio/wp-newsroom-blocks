@@ -7,7 +7,7 @@
 	"category": "newsroom",
 	"description": "Points readers to related articles you choose, right inside the story.",
 	"keywords": [ "related", "links", "see also", "more" ],
-	"textdomain": "wp-newsroom-blocks",
+	"textdomain": "mantek-newsroom-blocks",
 	"attributes": {
 		"postIds": {
 			"type": "array",

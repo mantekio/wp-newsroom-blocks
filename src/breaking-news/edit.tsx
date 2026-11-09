@@ -99,17 +99,19 @@ export default function Edit( {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={ __( 'Headlines', 'wp-newsroom-blocks' ) }>
+				<PanelBody
+					title={ __( 'Headlines', 'mantek-newsroom-blocks' ) }
+				>
 					<SelectControl
 						__nextHasNoMarginBottom
 						__next40pxDefaultSize
-						label={ __( 'Category', 'wp-newsroom-blocks' ) }
+						label={ __( 'Category', 'mantek-newsroom-blocks' ) }
 						value={ String( categoryId ) }
 						options={ [
 							{
 								label: __(
 									'All categories',
-									'wp-newsroom-blocks'
+									'mantek-newsroom-blocks'
 								),
 								value: '0',
 							},
@@ -127,7 +129,7 @@ export default function Edit( {
 						__next40pxDefaultSize
 						label={ __(
 							'Number of headlines',
-							'wp-newsroom-blocks'
+							'mantek-newsroom-blocks'
 						) }
 						min={ 1 }
 						max={ 10 }
@@ -141,11 +143,11 @@ export default function Edit( {
 						__next40pxDefaultSize
 						label={ __(
 							'Only posts from the last (hours)',
-							'wp-newsroom-blocks'
+							'mantek-newsroom-blocks'
 						) }
 						help={ __(
 							'With nothing that recent, the bar is not shown at all.',
-							'wp-newsroom-blocks'
+							'mantek-newsroom-blocks'
 						) }
 						min={ 1 }
 						max={ 168 }
@@ -159,7 +161,7 @@ export default function Edit( {
 						__next40pxDefaultSize
 						label={ __(
 							'Scroll speed (pixels per second)',
-							'wp-newsroom-blocks'
+							'mantek-newsroom-blocks'
 						) }
 						min={ 20 }
 						max={ 200 }
@@ -180,7 +182,7 @@ export default function Edit( {
 					onChange={ ( value: string ) =>
 						setAttributes( { label: value } )
 					}
-					placeholder={ __( 'Breaking', 'wp-newsroom-blocks' ) }
+					placeholder={ __( 'Breaking', 'mantek-newsroom-blocks' ) }
 					allowedFormats={ [] }
 					disableLineBreaks
 				/>
@@ -206,7 +208,7 @@ export default function Edit( {
 									'Nothing published in the last %d hour, so the bar is hidden on the site for now.',
 									'Nothing published in the last %d hours, so the bar is hidden on the site for now.',
 									maxAgeHours,
-									'wp-newsroom-blocks'
+									'mantek-newsroom-blocks'
 								),
 								maxAgeHours
 							) }

@@ -17,7 +17,7 @@
 		"build",
 		"includes",
 		"languages",
-		"wp-newsroom-blocks.php",
+		"mantek-newsroom-blocks.php",
 		"LICENSE",
 		"README.md",
 		"CHANGELOG.md"
@@ -33,12 +33,12 @@
 		"test:unit": "wp-scripts test-unit-js",
 		"test:e2e": "playwright test",
 		"screenshots": "playwright test --config=playwright.screenshots.config.ts",
-		"playground": "wp-playground-cli server --mount=.:/wordpress/wp-content/plugins/wp-newsroom-blocks --blueprint=tests/e2e/blueprint.json --login --port=9400",
+		"playground": "wp-playground-cli server --mount=.:/wordpress/wp-content/plugins/mantek-newsroom-blocks --blueprint=tests/e2e/blueprint.json --login --port=9400",
 		"i18n": "npm run i18n:pot && npm run i18n:mo && npm run i18n:json",
-		"i18n:pot": "wp i18n make-pot . languages/wp-newsroom-blocks.pot --exclude=node_modules,vendor,tests,src,artifacts --domain=wp-newsroom-blocks --headers='{\"Report-Msgid-Bugs-To\":\"https://github.com/mantekio/wp-newsroom-blocks/issues\"}'",
+		"i18n:pot": "wp i18n make-pot . languages/mantek-newsroom-blocks.pot --exclude=node_modules,vendor,tests,src,artifacts --domain=mantek-newsroom-blocks --headers='{\"Report-Msgid-Bugs-To\":\"https://github.com/mantekio/wp-newsroom-blocks/issues\"}'",
 		"i18n:mo": "wp i18n make-mo languages",
 		"i18n:json": "wp i18n make-json languages --no-purge --pretty-print",
-		"plugin-zip": "git archive --format=zip --prefix=wp-newsroom-blocks/ --output=wp-newsroom-blocks.zip HEAD"
+		"plugin-zip": "git archive --format=zip --prefix=mantek-newsroom-blocks/ --output=mantek-newsroom-blocks.zip HEAD"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.64.1",

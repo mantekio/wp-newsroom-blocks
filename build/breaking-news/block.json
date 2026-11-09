@@ -12,7 +12,7 @@
     "urgent",
     "headlines"
   ],
-  "textdomain": "wp-newsroom-blocks",
+  "textdomain": "mantek-newsroom-blocks",
   "attributes": {
     "label": {
       "type": "string",

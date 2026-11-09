@@ -7,7 +7,7 @@
 	"category": "newsroom",
 	"description": "Shows how a story unfolded, one dated event after another.",
 	"keywords": [ "timeline", "chronology", "events", "sequence" ],
-	"textdomain": "wp-newsroom-blocks",
+	"textdomain": "mantek-newsroom-blocks",
 	"supports": {
 		"html": false,
 		"anchor": true,

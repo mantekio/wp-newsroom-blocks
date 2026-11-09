@@ -12,7 +12,7 @@
     "events",
     "sequence"
   ],
-  "textdomain": "wp-newsroom-blocks",
+  "textdomain": "mantek-newsroom-blocks",
   "supports": {
     "html": false,
     "anchor": true,

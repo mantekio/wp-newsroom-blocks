@@ -286,7 +286,7 @@ test.describe( 'On the front end', () => {
 
 		// Routed requests skip the browser's cache, so every check reaches WordPress.
 		const endpoint = ( url: URL ) =>
-			url.href.includes( '/wp-newsroom-blocks/v1/live/' );
+			url.href.includes( '/mantek-newsroom-blocks/v1/live/' );
 		await page.route( endpoint, ( route ) => route.continue() );
 		await installTimers( page );
 		await openStory( page );
@@ -380,7 +380,7 @@ test.describe( 'On the front end', () => {
 		// Routed requests skip the browser's cache, so every check reaches WordPress.
 		let checks = 0;
 		await page.route(
-			( url ) => url.href.includes( '/wp-newsroom-blocks/v1/live/' ),
+			( url ) => url.href.includes( '/mantek-newsroom-blocks/v1/live/' ),
 			async ( route ) => {
 				checks += 1;
 				await route.continue();
@@ -435,7 +435,7 @@ test.describe( 'On the front end', () => {
 			'read-also',
 		] ) {
 			const response = await request.get(
-				`/wp-content/plugins/wp-newsroom-blocks/build/${ block }/render.php`
+				`/wp-content/plugins/mantek-newsroom-blocks/build/${ block }/render.php`
 			);
 			expect( await response.text(), block ).toBe( '' );
 		}

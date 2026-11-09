@@ -2,7 +2,7 @@
 /**
  * Server rendering for the Read also block.
  *
- * @package wp-newsroom-blocks
+ * @package mantek-newsroom-blocks
  */
 
 declare( strict_types = 1 );
@@ -45,7 +45,7 @@ final class ReadAlso {
 
 		$heading = trim( wp_strip_all_tags( (string) ( $attributes['heading'] ?? '' ) ) );
 		if ( '' === $heading ) {
-			$heading = __( 'Read also', 'wp-newsroom-blocks' );
+			$heading = __( 'Read also', 'mantek-newsroom-blocks' );
 		}
 
 		$items = '';

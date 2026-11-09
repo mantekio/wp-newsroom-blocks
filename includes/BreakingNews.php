@@ -2,7 +2,7 @@
 /**
  * Server rendering for the Breaking news bar block.
  *
- * @package wp-newsroom-blocks
+ * @package mantek-newsroom-blocks
  */
 
 declare( strict_types = 1 );
@@ -43,7 +43,7 @@ final class BreakingNews {
 
 		$label = trim( wp_strip_all_tags( (string) ( $attributes['label'] ?? '' ) ) );
 		if ( '' === $label ) {
-			$label = __( 'Breaking', 'wp-newsroom-blocks' );
+			$label = __( 'Breaking', 'mantek-newsroom-blocks' );
 		}
 
 		$speed = self::speed( $attributes['speed'] ?? 60 );
@@ -85,8 +85,8 @@ final class BreakingNews {
 			esc_html( $label ),
 			$items,
 			$copy,
-			esc_attr__( 'Pause the headlines', 'wp-newsroom-blocks' ),
-			esc_attr__( 'Close the breaking news bar', 'wp-newsroom-blocks' )
+			esc_attr__( 'Pause the headlines', 'mantek-newsroom-blocks' ),
+			esc_attr__( 'Close the breaking news bar', 'mantek-newsroom-blocks' )
 		);
 	}
 

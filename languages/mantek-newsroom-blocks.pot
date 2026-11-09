@@ -2,40 +2,40 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Newsroom Blocks 0.9.0\n"
+"Project-Id-Version: ManTek Newsroom Blocks 0.9.0\n"
 "Report-Msgid-Bugs-To: https://github.com/mantekio/wp-newsroom-blocks/issues\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-07T22:21:58+00:00\n"
+"POT-Creation-Date: 2026-11-09T04:44:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
-"X-Domain: wp-newsroom-blocks\n"
+"X-Domain: mantek-newsroom-blocks\n"
 
 #. Plugin Name of the plugin
-#: wp-newsroom-blocks.php
-msgid "WP Newsroom Blocks"
+#: mantek-newsroom-blocks.php
+msgid "ManTek Newsroom Blocks"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: wp-newsroom-blocks.php
+#: mantek-newsroom-blocks.php
 msgid "https://github.com/mantekio/wp-newsroom-blocks"
 msgstr ""
 
 #. Description of the plugin
-#: wp-newsroom-blocks.php
+#: mantek-newsroom-blocks.php
 msgid "Editorial blocks for newsrooms, built right-to-left first: Read also, Story timeline, Live updates and a Breaking news bar."
 msgstr ""
 
 #. Author of the plugin
-#: wp-newsroom-blocks.php
+#: mantek-newsroom-blocks.php
 msgid "ManTek Technologies"
 msgstr ""
 
 #. Author URI of the plugin
-#: wp-newsroom-blocks.php
+#: mantek-newsroom-blocks.php
 msgid "https://www.mantek.io"
 msgstr ""
 
@@ -53,7 +53,7 @@ msgid "Close the breaking news bar"
 msgstr ""
 
 #. translators: %s: number of updates in the live blog.
-#: includes/LiveUpdates.php:89
+#: includes/LiveUpdates.php:106
 #: build/live-updates/index.js:2
 #, php-format,js-format
 msgid "%s update"
@@ -61,36 +61,36 @@ msgid_plural "%s updates"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/LiveUpdates.php:116
+#: includes/LiveUpdates.php:133
 msgid "Live updates"
 msgstr ""
 
-#: includes/LiveUpdates.php:121
+#: includes/LiveUpdates.php:138
 #: build/live-updates/index.js:1
 msgid "Live"
 msgstr ""
 
-#: includes/LiveUpdates.php:123
+#: includes/LiveUpdates.php:140
 #: build/live-updates/index.js:1
 msgid "Coverage ended"
 msgstr ""
 
-#: includes/LiveUpdates.php:153
+#: includes/LiveUpdates.php:174
 #: build/live-update/index.js:1
 msgid "Key update"
 msgstr ""
 
-#: includes/LiveUpdates.php:209
+#: includes/LiveUpdates.php:242
 msgid "Invalid post ID."
 msgstr ""
 
-#: includes/LiveUpdates.php:399
-#: includes/LiveUpdates.php:463
+#: includes/LiveUpdates.php:449
+#: includes/LiveUpdates.php:513
 msgid "just now"
 msgstr ""
 
 #. translators: %s: number of minutes.
-#: includes/LiveUpdates.php:414
+#: includes/LiveUpdates.php:464
 #, php-format
 msgid "%s minute ago"
 msgid_plural "%s minutes ago"
@@ -98,7 +98,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: number of hours.
-#: includes/LiveUpdates.php:418
+#: includes/LiveUpdates.php:468
 #, php-format
 msgid "%s hour ago"
 msgid_plural "%s hours ago"
@@ -106,7 +106,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: number of days.
-#: includes/LiveUpdates.php:422
+#: includes/LiveUpdates.php:472
 #, php-format
 msgid "%s day ago"
 msgid_plural "%s days ago"
@@ -114,7 +114,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: number of new updates waiting to be shown.
-#: includes/LiveUpdates.php:466
+#: includes/LiveUpdates.php:516
 #, php-format
 msgid "Show %s new update"
 msgid_plural "Show %s new updates"

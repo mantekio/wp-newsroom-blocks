@@ -312,7 +312,7 @@ test.describe( 'In the editor', () => {
 				live.locator( '.wp-block-mantek-live-updates__count' )
 			).toHaveText( `${ count } updates` );
 			const summary = await requestUtils.rest< { count: number } >( {
-				path: `/wp-newsroom-blocks/v1/live/${ post.id }`,
+				path: `/mantek-newsroom-blocks/v1/live/${ post.id }`,
 			} );
 			expect( summary.count ).toBe( count );
 		};

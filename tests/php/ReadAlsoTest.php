@@ -2,7 +2,7 @@
 /**
  * Tests for the Read also block's server rendering.
  *
- * @package wp-newsroom-blocks
+ * @package mantek-newsroom-blocks
  */
 
 declare( strict_types = 1 );

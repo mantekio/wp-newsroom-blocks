@@ -40,6 +40,9 @@
         },
         "sort-packages": true
     },
+    "extra": {
+        "installer-name": "mantek-newsroom-blocks"
+    },
     "scripts": {
         "lint": "phpcs",
         "lint:fix": "phpcbf",

@@ -9,7 +9,7 @@
     "mantek/live-updates"
   ],
   "description": "One timestamped entry in a live blog.",
-  "textdomain": "wp-newsroom-blocks",
+  "textdomain": "mantek-newsroom-blocks",
   "attributes": {
     "timestamp": {
       "type": "integer",

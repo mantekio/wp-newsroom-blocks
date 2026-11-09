@@ -39,7 +39,7 @@ const ALLOWED_BLOCKS = [
 const TEMPLATE: BlockTemplate = [
 	[
 		'core/paragraph',
-		{ placeholder: __( 'What happened?', 'wp-newsroom-blocks' ) },
+		{ placeholder: __( 'What happened?', 'mantek-newsroom-blocks' ) },
 	],
 ];
 
@@ -80,7 +80,7 @@ export default function Edit( {
 								icon={ calendar }
 								label={ __(
 									'Set the date',
-									'wp-newsroom-blocks'
+									'mantek-newsroom-blocks'
 								) }
 								onClick={ onToggle }
 								aria-expanded={ isOpen }
@@ -104,7 +104,7 @@ export default function Edit( {
 									>
 										{ __(
 											'Remove the date',
-											'wp-newsroom-blocks'
+											'mantek-newsroom-blocks'
 										) }
 									</Button>
 								) }
@@ -122,7 +122,10 @@ export default function Edit( {
 					onChange={ ( value: string ) =>
 						setAttributes( { label: value } )
 					}
-					placeholder={ __( 'Date or time', 'wp-newsroom-blocks' ) }
+					placeholder={ __(
+						'Date or time',
+						'mantek-newsroom-blocks'
+					) }
 					allowedFormats={ [] }
 					disableLineBreaks
 				/>
@@ -135,7 +138,7 @@ export default function Edit( {
 					}
 					placeholder={ __(
 						'What happened, in a few words',
-						'wp-newsroom-blocks'
+						'mantek-newsroom-blocks'
 					) }
 					allowedFormats={ [
 						'core/bold',

@@ -39,7 +39,7 @@ const ALLOWED_BLOCKS = [
 const TEMPLATE: BlockTemplate = [
 	[
 		'core/paragraph',
-		{ placeholder: __( 'What is the latest?', 'wp-newsroom-blocks' ) },
+		{ placeholder: __( 'What is the latest?', 'mantek-newsroom-blocks' ) },
 	],
 ];
 
@@ -78,7 +78,7 @@ export default function Edit( {
 								icon={ scheduled }
 								label={ __(
 									'Change the time',
-									'wp-newsroom-blocks'
+									'mantek-newsroom-blocks'
 								) }
 								onClick={ onToggle }
 								aria-expanded={ isOpen }
@@ -106,11 +106,11 @@ export default function Edit( {
 							important
 								? __(
 										'Unmark as a key update',
-										'wp-newsroom-blocks'
+										'mantek-newsroom-blocks'
 									)
 								: __(
 										'Mark as a key update',
-										'wp-newsroom-blocks'
+										'mantek-newsroom-blocks'
 									)
 						}
 						isPressed={ important }
@@ -139,7 +139,7 @@ export default function Edit( {
 					) }
 					{ important && (
 						<span className="wp-block-mantek-live-update__key">
-							{ __( 'Key update', 'wp-newsroom-blocks' ) }
+							{ __( 'Key update', 'mantek-newsroom-blocks' ) }
 						</span>
 					) }
 				</header>

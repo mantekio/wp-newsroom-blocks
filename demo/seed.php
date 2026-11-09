@@ -1,11 +1,11 @@
 <?php
 /**
- * Demo content for WP Newsroom Blocks, written in the site's language (English or Arabic):
+ * Demo content for ManTek Newsroom Blocks, written in the site's language (English or Arabic):
  * a Breaking category with fresh headlines, two related articles, and one story that uses all four blocks.
  *
  * Run by the Playground blueprints in demo/ and tests/e2e/. The news is invented.
  *
- * @package wp-newsroom-blocks
+ * @package mantek-newsroom-blocks
  */
 
 declare( strict_types = 1 );

@@ -2,7 +2,7 @@
 /**
  * Server rendering and REST endpoint for the Live updates blocks.
  *
- * @package wp-newsroom-blocks
+ * @package mantek-newsroom-blocks
  */
 
 declare( strict_types = 1 );
@@ -40,7 +40,7 @@ final class LiveUpdates {
 	/**
 	 * REST namespace for the polling endpoint.
 	 */
-	public const REST_NAMESPACE = 'wp-newsroom-blocks/v1';
+	public const REST_NAMESPACE = 'mantek-newsroom-blocks/v1';
 
 	/**
 	 * The shortest polling interval, in seconds. The endpoint is cached for the same time.
@@ -56,7 +56,7 @@ final class LiveUpdates {
 	/**
 	 * Object cache group for parsed live blogs.
 	 */
-	private const CACHE_GROUP = 'wp-newsroom-blocks';
+	private const CACHE_GROUP = 'mantek-newsroom-blocks';
 
 	/**
 	 * Anchors given to the entries of the live blog being rendered, so two entries with the same time still get distinct ones.
@@ -103,7 +103,7 @@ final class LiveUpdates {
 
 		$count = sprintf(
 			/* translators: %s: number of updates in the live blog. */
-			_n( '%s update', '%s updates', $summary['count'], 'wp-newsroom-blocks' ),
+			_n( '%s update', '%s updates', $summary['count'], 'mantek-newsroom-blocks' ),
 			number_format_i18n( $summary['count'] )
 		);
 
@@ -130,14 +130,14 @@ final class LiveUpdates {
 				. '<div class="wp-block-mantek-live-updates__entries">%11$s</div>'
 				. '</section>',
 			get_block_wrapper_attributes( array( 'class' => $is_live ? 'is-live' : 'is-ended' ) ),
-			esc_attr__( 'Live updates', 'wp-newsroom-blocks' ),
+			esc_attr__( 'Live updates', 'mantek-newsroom-blocks' ),
 			esc_attr( self::STORE ),
 			esc_attr( self::STORE . '/' . $post_id ),
 			wp_interactivity_data_wp_context( $context ),
 			$is_live ? '' : ' hidden',
-			esc_html__( 'Live', 'wp-newsroom-blocks' ),
+			esc_html__( 'Live', 'mantek-newsroom-blocks' ),
 			$is_live ? ' hidden' : '',
-			esc_html__( 'Coverage ended', 'wp-newsroom-blocks' ),
+			esc_html__( 'Coverage ended', 'mantek-newsroom-blocks' ),
 			esc_html( $count ),
 			$content
 		);
@@ -171,7 +171,7 @@ final class LiveUpdates {
 			);
 		}
 		if ( $important ) {
-			$meta .= sprintf( '<span class="wp-block-mantek-live-update__key">%s</span>', esc_html__( 'Key update', 'wp-newsroom-blocks' ) );
+			$meta .= sprintf( '<span class="wp-block-mantek-live-update__key">%s</span>', esc_html__( 'Key update', 'mantek-newsroom-blocks' ) );
 		}
 
 		$anchor = $timestamp > 0 ? self::anchor( $timestamp ) : '';
@@ -239,7 +239,7 @@ final class LiveUpdates {
 	public static function rest_can_read( WP_REST_Request $request ): bool|WP_Error {
 		$post = get_post( (int) $request['id'] );
 		if ( ! $post instanceof WP_Post || ! is_post_publicly_viewable( $post ) || '' !== $post->post_password ) {
-			return new WP_Error( 'rest_post_invalid_id', __( 'Invalid post ID.', 'wp-newsroom-blocks' ), array( 'status' => 404 ) );
+			return new WP_Error( 'rest_post_invalid_id', __( 'Invalid post ID.', 'mantek-newsroom-blocks' ), array( 'status' => 404 ) );
 		}
 
 		return true;
@@ -446,7 +446,7 @@ final class LiveUpdates {
 	public static function relative_label( int $seconds ): string {
 		list( $unit, $number ) = self::elapsed( $seconds );
 		if ( 'now' === $unit ) {
-			return __( 'just now', 'wp-newsroom-blocks' );
+			return __( 'just now', 'mantek-newsroom-blocks' );
 		}
 
 		return sprintf( self::relative_template( $unit, $number ), number_format_i18n( $number ) );
@@ -461,15 +461,15 @@ final class LiveUpdates {
 	private static function relative_template( string $unit, int $number ): string {
 		if ( 'minute' === $unit ) {
 			/* translators: %s: number of minutes. */
-			return _n( '%s minute ago', '%s minutes ago', $number, 'wp-newsroom-blocks' );
+			return _n( '%s minute ago', '%s minutes ago', $number, 'mantek-newsroom-blocks' );
 		}
 		if ( 'hour' === $unit ) {
 			/* translators: %s: number of hours. */
-			return _n( '%s hour ago', '%s hours ago', $number, 'wp-newsroom-blocks' );
+			return _n( '%s hour ago', '%s hours ago', $number, 'mantek-newsroom-blocks' );
 		}
 
 		/* translators: %s: number of days. */
-		return _n( '%s day ago', '%s days ago', $number, 'wp-newsroom-blocks' );
+		return _n( '%s day ago', '%s days ago', $number, 'mantek-newsroom-blocks' );
 	}
 
 	/**
@@ -510,10 +510,10 @@ final class LiveUpdates {
 
 		// The %s stays in each label; the browser fills it with the real number.
 		$labels   = array();
-		$relative = array( 'now' => __( 'just now', 'wp-newsroom-blocks' ) );
+		$relative = array( 'now' => __( 'just now', 'mantek-newsroom-blocks' ) );
 		foreach ( self::PLURAL_SAMPLES as $sample ) {
 			/* translators: %s: number of new updates waiting to be shown. */
-			$labels[ (string) $sample ] = _n( 'Show %s new update', 'Show %s new updates', $sample, 'wp-newsroom-blocks' );
+			$labels[ (string) $sample ] = _n( 'Show %s new update', 'Show %s new updates', $sample, 'mantek-newsroom-blocks' );
 			foreach ( array( 'minute', 'hour', 'day' ) as $unit ) {
 				$relative[ $unit ][ (string) $sample ] = self::relative_template( $unit, $sample );
 			}

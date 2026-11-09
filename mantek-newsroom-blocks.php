@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       WP Newsroom Blocks
+ * Plugin Name:       ManTek Newsroom Blocks
  * Plugin URI:        https://github.com/mantekio/wp-newsroom-blocks
  * Description:       Editorial blocks for newsrooms, built right-to-left first: Read also, Story timeline, Live updates and a Breaking news bar.
  * Version:           0.9.0
@@ -10,11 +10,10 @@
  * Author URI:        https://www.mantek.io
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       wp-newsroom-blocks
+ * Text Domain:       mantek-newsroom-blocks
  * Domain Path:       /languages
- * Update URI:        https://github.com/mantekio/wp-newsroom-blocks
  *
- * @package wp-newsroom-blocks
+ * @package mantek-newsroom-blocks
  */
 
 declare( strict_types = 1 );

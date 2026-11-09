@@ -15,7 +15,7 @@ return array(
 			'urgent',
 			'headlines'
 		),
-		'textdomain' => 'wp-newsroom-blocks',
+		'textdomain' => 'mantek-newsroom-blocks',
 		'attributes' => array(
 			'label' => array(
 				'type' => 'string',
@@ -75,7 +75,7 @@ return array(
 			'mantek/live-updates'
 		),
 		'description' => 'One timestamped entry in a live blog.',
-		'textdomain' => 'wp-newsroom-blocks',
+		'textdomain' => 'mantek-newsroom-blocks',
 		'attributes' => array(
 			'timestamp' => array(
 				'type' => 'integer',
@@ -108,7 +108,7 @@ return array(
 			'coverage',
 			'minute by minute'
 		),
-		'textdomain' => 'wp-newsroom-blocks',
+		'textdomain' => 'mantek-newsroom-blocks',
 		'attributes' => array(
 			'isLive' => array(
 				'type' => 'boolean',
@@ -156,7 +156,7 @@ return array(
 			'see also',
 			'more'
 		),
-		'textdomain' => 'wp-newsroom-blocks',
+		'textdomain' => 'mantek-newsroom-blocks',
 		'attributes' => array(
 			'postIds' => array(
 				'type' => 'array',
@@ -217,7 +217,7 @@ return array(
 			'events',
 			'sequence'
 		),
-		'textdomain' => 'wp-newsroom-blocks',
+		'textdomain' => 'mantek-newsroom-blocks',
 		'supports' => array(
 			'html' => false,
 			'anchor' => true,
@@ -276,7 +276,7 @@ return array(
 			'mantek/timeline'
 		),
 		'description' => 'One dated moment in a story timeline.',
-		'textdomain' => 'wp-newsroom-blocks',
+		'textdomain' => 'mantek-newsroom-blocks',
 		'attributes' => array(
 			'datetime' => array(
 				'type' => 'string',

@@ -2,7 +2,7 @@
 /**
  * Front-end markup for one Live update entry.
  *
- * @package wp-newsroom-blocks
+ * @package mantek-newsroom-blocks
  *
  * @var array<string, mixed> $attributes Block attributes.
  * @var string               $content    The rendered inner blocks.

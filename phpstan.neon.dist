@@ -4,5 +4,5 @@
 parameters:
 	level: 8
 	paths:
-		- wp-newsroom-blocks.php
+		- mantek-newsroom-blocks.php
 		- includes

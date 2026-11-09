@@ -12,7 +12,7 @@
     "coverage",
     "minute by minute"
   ],
-  "textdomain": "wp-newsroom-blocks",
+  "textdomain": "mantek-newsroom-blocks",
   "attributes": {
     "isLive": {
       "type": "boolean",

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="WP Newsroom Blocks">
-	<description>WordPress and WordPress VIP coding standards for WP Newsroom Blocks.</description>
+<ruleset name="ManTek Newsroom Blocks">
+	<description>WordPress and WordPress VIP coding standards for ManTek Newsroom Blocks.</description>
 
 	<file>.</file>
 
@@ -25,7 +25,7 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element value="wp-newsroom-blocks"/>
+				<element value="mantek-newsroom-blocks"/>
 			</property>
 		</properties>
 	</rule>
@@ -34,7 +34,7 @@
 		<properties>
 			<property name="prefixes" type="array">
 				<element value="ManTek\NewsroomBlocks"/>
-				<element value="wp_newsroom_blocks"/>
+				<element value="mantek_newsroom_blocks"/>
 			</property>
 		</properties>
 	</rule>

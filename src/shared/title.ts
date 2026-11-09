@@ -21,6 +21,6 @@ export function stripTags( html: string ): string {
 export function titleText( rendered: string ): string {
 	return (
 		decodeEntities( stripTags( rendered ) ).trim() ||
-		__( '(no title)', 'wp-newsroom-blocks' )
+		__( '(no title)', 'mantek-newsroom-blocks' )
 	);
 }

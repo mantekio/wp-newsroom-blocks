@@ -2,7 +2,7 @@
 /**
  * Base test case: sets up Brain Monkey and the WordPress functions every test can rely on.
  *
- * @package wp-newsroom-blocks
+ * @package mantek-newsroom-blocks
  */
 
 declare( strict_types = 1 );

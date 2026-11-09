@@ -2,7 +2,7 @@
 /**
  * Tests for the Breaking news bar's server rendering.
  *
- * @package wp-newsroom-blocks
+ * @package mantek-newsroom-blocks
  */
 
 declare( strict_types = 1 );

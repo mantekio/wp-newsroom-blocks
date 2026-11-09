@@ -2,7 +2,7 @@
 /**
  * Hooks the plugin into WordPress.
  *
- * @package wp-newsroom-blocks
+ * @package mantek-newsroom-blocks
  */
 
 declare( strict_types = 1 );
@@ -20,7 +20,7 @@ final class Plugin {
 	/**
 	 * Text domain for PHP and JavaScript strings.
 	 */
-	public const TEXT_DOMAIN = 'wp-newsroom-blocks';
+	public const TEXT_DOMAIN = 'mantek-newsroom-blocks';
 
 	/**
 	 * Namespace shared by every block in the plugin.
@@ -101,7 +101,7 @@ final class Plugin {
 	public static function title_html( WP_Post $post ): string {
 		$title = wp_kses( get_the_title( $post ), self::TITLE_TAGS );
 		if ( '' === trim( wp_strip_all_tags( $title ) ) ) {
-			return esc_html__( '(no title)', 'wp-newsroom-blocks' );
+			return esc_html__( '(no title)', 'mantek-newsroom-blocks' );
 		}
 
 		return $title;
@@ -147,7 +147,7 @@ final class Plugin {
 
 		$categories[] = array(
 			'slug'  => self::CATEGORY,
-			'title' => __( 'Newsroom', 'wp-newsroom-blocks' ),
+			'title' => __( 'Newsroom', 'mantek-newsroom-blocks' ),
 			'icon'  => null,
 		);
 

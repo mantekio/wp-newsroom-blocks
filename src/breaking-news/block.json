@@ -7,7 +7,7 @@
 	"category": "newsroom",
 	"description": "A scrolling strip of the latest headlines from a category. It disappears by itself when nothing new has been published.",
 	"keywords": [ "ticker", "breaking", "urgent", "headlines" ],
-	"textdomain": "wp-newsroom-blocks",
+	"textdomain": "mantek-newsroom-blocks",
 	"attributes": {
 		"label": {
 			"type": "string",

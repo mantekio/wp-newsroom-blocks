@@ -7,7 +7,7 @@
 	"category": "newsroom",
 	"description": "A live blog: timestamped updates, newest first, which readers see arrive without reloading the page.",
 	"keywords": [ "live blog", "breaking", "coverage", "minute by minute" ],
-	"textdomain": "wp-newsroom-blocks",
+	"textdomain": "mantek-newsroom-blocks",
 	"attributes": {
 		"isLive": {
 			"type": "boolean",

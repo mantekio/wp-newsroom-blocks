@@ -47,7 +47,7 @@ function blueprint( source: string ): string {
 const playground = ( source: string, port: number ) =>
 	[
 		'npx wp-playground-cli server',
-		`--mount=${ PLUGIN }:/wordpress/wp-content/plugins/wp-newsroom-blocks`,
+		`--mount=${ PLUGIN }:/wordpress/wp-content/plugins/mantek-newsroom-blocks`,
 		`--blueprint=${ blueprint( source ) }`,
 		`--port=${ port }`,
 	].join( ' ' );

@@ -9,7 +9,7 @@
     "mantek/timeline"
   ],
   "description": "One dated moment in a story timeline.",
-  "textdomain": "wp-newsroom-blocks",
+  "textdomain": "mantek-newsroom-blocks",
   "attributes": {
     "datetime": {
       "type": "string",

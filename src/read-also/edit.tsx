@@ -126,12 +126,12 @@ export default function Edit( {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={ __( 'Settings', 'wp-newsroom-blocks' ) }>
+				<PanelBody title={ __( 'Settings', 'mantek-newsroom-blocks' ) }>
 					<ToggleControl
 						__nextHasNoMarginBottom
 						label={ __(
 							'Show featured images',
-							'wp-newsroom-blocks'
+							'mantek-newsroom-blocks'
 						) }
 						checked={ showThumbnails }
 						onChange={ ( value ) =>
@@ -149,7 +149,7 @@ export default function Edit( {
 					onChange={ ( value: string ) =>
 						setAttributes( { heading: value } )
 					}
-					placeholder={ __( 'Read also', 'wp-newsroom-blocks' ) }
+					placeholder={ __( 'Read also', 'mantek-newsroom-blocks' ) }
 					allowedFormats={ [] }
 					disableLineBreaks
 				/>
@@ -158,7 +158,7 @@ export default function Edit( {
 					<p className="wp-block-mantek-read-also__hint">
 						{ __(
 							'Search below to add up to five related articles.',
-							'wp-newsroom-blocks'
+							'mantek-newsroom-blocks'
 						) }
 					</p>
 				) : (
@@ -171,7 +171,7 @@ export default function Edit( {
 							} else if ( chosenLoaded ) {
 								title = __(
 									'Unavailable: no longer published',
-									'wp-newsroom-blocks'
+									'mantek-newsroom-blocks'
 								);
 							}
 							return (
@@ -189,7 +189,7 @@ export default function Edit( {
 												icon={ chevronUp }
 												label={ __(
 													'Move up',
-													'wp-newsroom-blocks'
+													'mantek-newsroom-blocks'
 												) }
 												disabled={ index === 0 }
 												accessibleWhenDisabled
@@ -208,7 +208,7 @@ export default function Edit( {
 												icon={ chevronDown }
 												label={ __(
 													'Move down',
-													'wp-newsroom-blocks'
+													'mantek-newsroom-blocks'
 												) }
 												disabled={
 													index === postIds.length - 1
@@ -229,7 +229,7 @@ export default function Edit( {
 												icon={ closeSmall }
 												label={ __(
 													'Remove',
-													'wp-newsroom-blocks'
+													'mantek-newsroom-blocks'
 												) }
 												onClick={ () =>
 													setAttributes( {
@@ -254,7 +254,7 @@ export default function Edit( {
 							__nextHasNoMarginBottom
 							label={ __(
 								'Search articles',
-								'wp-newsroom-blocks'
+								'mantek-newsroom-blocks'
 							) }
 							value={ search }
 							onChange={ ( value: string ) => {
@@ -269,7 +269,7 @@ export default function Edit( {
 								<p className="wp-block-mantek-read-also__hint">
 									{ __(
 										'No published articles match that search.',
-										'wp-newsroom-blocks'
+										'mantek-newsroom-blocks'
 									) }
 								</p>
 							) }
@@ -303,7 +303,7 @@ export default function Edit( {
 							/* translators: %d: the most articles one block can link to. */
 							__(
 								'That is the maximum of %d articles. Remove one to add another.',
-								'wp-newsroom-blocks'
+								'mantek-newsroom-blocks'
 							),
 							MAX_POSTS
 						) }

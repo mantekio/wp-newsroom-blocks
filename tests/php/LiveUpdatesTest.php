@@ -2,7 +2,7 @@
 /**
  * Tests for the Live updates blocks and their polling endpoint.
  *
- * @package wp-newsroom-blocks
+ * @package mantek-newsroom-blocks
  */
 
 declare( strict_types = 1 );
@@ -336,7 +336,7 @@ final class LiveUpdatesTest extends TestCase {
 				)
 			)
 		);
-		Functions\expect( 'wp_cache_get' )->once()->with( 'live-blog-5-' . md5( '<!-- the live blog -->' ), 'wp-newsroom-blocks' )->andReturn( false );
+		Functions\expect( 'wp_cache_get' )->once()->with( 'live-blog-5-' . md5( '<!-- the live blog -->' ), 'mantek-newsroom-blocks' )->andReturn( false );
 		Functions\expect( 'parse_blocks' )->once()->andReturn( array( $container ) );
 		Functions\expect( 'wp_cache_set' )->once();
 
@@ -563,7 +563,7 @@ final class LiveUpdatesTest extends TestCase {
 		// Coverage can end while the page is open, so its notice is there too, hidden.
 		$this->assertStringContainsString( '<span class="wp-block-mantek-live-updates__ended" hidden data-wp-bind--hidden="context.isLive">Coverage ended</span>', $html );
 		$this->assertStringContainsString( '>3 updates</span>', $html );
-		$this->assertStringContainsString( '"endpoint":"https:\/\/example.com\/wp-json\/wp-newsroom-blocks\/v1\/live\/5"', $html );
+		$this->assertStringContainsString( '"endpoint":"https:\/\/example.com\/wp-json\/mantek-newsroom-blocks\/v1\/live\/5"', $html );
 		$this->assertStringContainsString( '"latest":300', $html );
 		$this->assertStringContainsString( '"newest":300', $html );
 		// The interval never drops below the cache lifetime of the endpoint.

@@ -6,7 +6,7 @@
 		"wp": "latest"
 	},
 	"meta": {
-		"title": "WP Newsroom Blocks (Arabic)",
+		"title": "ManTek Newsroom Blocks (Arabic)",
 		"author": "ManTek Technologies",
 		"description": "The same demo story on an Arabic, right-to-left site."
 	},
@@ -25,7 +25,7 @@
 			},
 			"options": {
 				"activate": true,
-				"targetFolderName": "wp-newsroom-blocks"
+				"targetFolderName": "mantek-newsroom-blocks"
 			}
 		},
 		{
@@ -38,7 +38,7 @@
 		},
 		{
 			"step": "runPHP",
-			"code": "<?php require '/wordpress/wp-content/plugins/wp-newsroom-blocks/demo/seed.php';"
+			"code": "<?php require '/wordpress/wp-content/plugins/mantek-newsroom-blocks/demo/seed.php';"
 		},
 		{
 			"step": "login"

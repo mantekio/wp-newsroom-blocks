@@ -4,7 +4,7 @@
  *
  * phpcs:disable Generic.Files.OneObjectStructurePerFile, Squiz.Commenting
  *
- * @package wp-newsroom-blocks
+ * @package mantek-newsroom-blocks
  */
 
 declare( strict_types = 1 );

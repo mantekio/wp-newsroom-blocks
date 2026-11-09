@@ -2,7 +2,7 @@
 /**
  * Front-end markup for the Read also block.
  *
- * @package wp-newsroom-blocks
+ * @package mantek-newsroom-blocks
  *
  * @var array<string, mixed> $attributes Block attributes.
  * @var WP_Block             $block      Block instance.

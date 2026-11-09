@@ -183,7 +183,7 @@ export default function Edit( {
 	// Live blogs read newest first, so a new entry goes on top, with the caret already in it.
 	const addUpdate = () => {
 		const paragraph = createBlock( 'core/paragraph', {
-			placeholder: __( 'What is the latest?', 'wp-newsroom-blocks' ),
+			placeholder: __( 'What is the latest?', 'mantek-newsroom-blocks' ),
 		} );
 		insertBlock(
 			createBlock( ENTRY, {}, [ paragraph ] ),
@@ -197,19 +197,22 @@ export default function Edit( {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={ __( 'Coverage', 'wp-newsroom-blocks' ) }>
+				<PanelBody title={ __( 'Coverage', 'mantek-newsroom-blocks' ) }>
 					<ToggleControl
 						__nextHasNoMarginBottom
-						label={ __( 'Coverage is live', 'wp-newsroom-blocks' ) }
+						label={ __(
+							'Coverage is live',
+							'mantek-newsroom-blocks'
+						) }
 						help={
 							isLive
 								? __(
 										'Readers see a Live badge and are offered new updates without reloading.',
-										'wp-newsroom-blocks'
+										'mantek-newsroom-blocks'
 									)
 								: __(
 										'Readers see that coverage has ended, and the page stops checking for updates.',
-										'wp-newsroom-blocks'
+										'mantek-newsroom-blocks'
 									)
 						}
 						checked={ isLive }
@@ -222,7 +225,7 @@ export default function Edit( {
 						__next40pxDefaultSize
 						label={ __(
 							'Check for new updates every (seconds)',
-							'wp-newsroom-blocks'
+							'mantek-newsroom-blocks'
 						) }
 						min={ 15 }
 						max={ 300 }
@@ -240,11 +243,11 @@ export default function Edit( {
 				<header className="wp-block-mantek-live-updates__header">
 					{ isLive ? (
 						<span className="wp-block-mantek-live-updates__badge">
-							{ __( 'Live', 'wp-newsroom-blocks' ) }
+							{ __( 'Live', 'mantek-newsroom-blocks' ) }
 						</span>
 					) : (
 						<span className="wp-block-mantek-live-updates__ended">
-							{ __( 'Coverage ended', 'wp-newsroom-blocks' ) }
+							{ __( 'Coverage ended', 'mantek-newsroom-blocks' ) }
 						</span>
 					) }
 					<span className="wp-block-mantek-live-updates__count">
@@ -254,7 +257,7 @@ export default function Edit( {
 								'%s update',
 								'%s updates',
 								count,
-								'wp-newsroom-blocks'
+								'mantek-newsroom-blocks'
 							),
 							// Western digits, as WordPress prints them, whatever the browser's language.
 							String( count )
@@ -267,8 +270,11 @@ export default function Edit( {
 						onClick={ addUpdate }
 					>
 						{ entries.length === 0
-							? __( 'Add the first update', 'wp-newsroom-blocks' )
-							: __( 'Add an update', 'wp-newsroom-blocks' ) }
+							? __(
+									'Add the first update',
+									'mantek-newsroom-blocks'
+								)
+							: __( 'Add an update', 'mantek-newsroom-blocks' ) }
 					</Button>
 				</header>
 				<div { ...innerBlocksProps } />
