@@ -58,7 +58,13 @@ Requires **WordPress 6.8** or later and **PHP 8.1** or later.
 
 **From a release:** download `mantek-newsroom-blocks.zip` from the [releases page](https://github.com/mantekio/wp-newsroom-blocks/releases) and upload it under Plugins → Add New → Upload Plugin.
 
-**From source:** clone the repository into `wp-content/plugins/mantek-newsroom-blocks` and activate it. The compiled blocks are committed, so no Node.js build is needed.
+**From source:** clone the repository into `wp-content/plugins/mantek-newsroom-blocks` and activate it. Give the folder that name in the command: a plain clone takes the repository's name, `wp-newsroom-blocks`, and a copy installed later from a release would then sit beside it instead of replacing it.
+
+```bash
+git clone https://github.com/mantekio/wp-newsroom-blocks.git wp-content/plugins/mantek-newsroom-blocks
+```
+
+The compiled blocks are committed, so no Node.js build is needed.
 
 The blocks appear in the inserter under **Newsroom**.
 

@@ -108,7 +108,12 @@ final class Plugin {
 	}
 
 	/**
-	 * Loads the translations bundled in languages/.
+	 * Points WordPress at the translations bundled in languages/.
+	 *
+	 * WordPress does this itself, from the Text Domain and Domain Path headers, for a plugin activated
+	 * on a single site, but not for one activated across a multisite network. Without this call, a
+	 * network-activated copy shows no bundled translations until a language pack arrives. Plugin Check
+	 * warns about the call because plugins on WordPress.org usually rely on language packs alone.
 	 */
 	public static function load_textdomain(): void {
 		load_plugin_textdomain( self::TEXT_DOMAIN, false, dirname( plugin_basename( PLUGIN_FILE ) ) . '/languages' );

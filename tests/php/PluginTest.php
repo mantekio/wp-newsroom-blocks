@@ -27,6 +27,14 @@ final class PluginTest extends TestCase {
 		Plugin::boot();
 	}
 
+	public function test_points_wordpress_at_the_bundled_translations(): void {
+		Functions\when( 'plugin_basename' )->justReturn( 'mantek-newsroom-blocks/mantek-newsroom-blocks.php' );
+		// Needed by a network-activated copy, for which WordPress registers no translations path itself.
+		Functions\expect( 'load_plugin_textdomain' )->once()->with( 'mantek-newsroom-blocks', false, 'mantek-newsroom-blocks/languages' )->andReturn( true );
+
+		Plugin::load_textdomain();
+	}
+
 	public function test_adds_the_newsroom_category_once(): void {
 		$categories = Plugin::register_category( array( array( 'slug' => 'text' ) ) );
 
