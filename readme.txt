@@ -1,6 +1,6 @@
 === ManTek Newsroom Blocks ===
-Contributors: WPORG_USERNAME
-Tags: live blog, breaking news, newsroom, rtl, arabic
+Contributors: mantekio, jaafarabazid
+Tags: live blog, breaking news, news ticker, rtl, arabic
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.1
@@ -8,7 +8,7 @@ Stable tag: 0.9.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Newsroom blocks built right to left first: a breaking news bar, Read also, a story timeline and a live blog that updates without reloading.
+A live blog that updates without a reload, a breaking news ticker, a story timeline and related articles. Built right to left first, Arabic included.
 
 == Description ==
 
