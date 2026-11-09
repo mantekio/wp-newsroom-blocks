@@ -16,6 +16,7 @@
 /phpstan.neon.dist export-ignore
 /phpunit.xml.dist export-ignore
 /playwright.config.ts export-ignore
+/playwright.screenshots.config.ts export-ignore
 /tsconfig.json export-ignore
 /vitest.config.mts export-ignore
 /demo export-ignore

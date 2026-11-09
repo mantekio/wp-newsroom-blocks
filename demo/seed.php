@@ -29,6 +29,8 @@ function seed(): void {
 		),
 		'related'   => array( 'كيف يجري فرز الأصوات', 'خمسة أمور ينبغي معرفتها قبل يوم الاقتراع' ),
 		'title'     => 'ليلة الانتخابات: تغطية مباشرة',
+		'author'    => 'غرفة الأخبار',
+		'section'   => 'الانتخابات',
 		'intro'     => 'بدأ فرز الأصوات بعد يوم شهد إقبالاً كبيراً على مراكز الاقتراع في أنحاء المدينة.',
 		'timeline'  => 'كيف جرى اليوم',
 		'events'    => array(
@@ -39,7 +41,7 @@ function seed(): void {
 		'live'      => 'مباشر',
 		'updates'   => array(
 			3  => 'النتائج الأولية من الدائرة الأولى تُظهر تقدّماً طفيفاً للمرشح المستقل.',
-			25 => 'اللجنة تتوقع إعلان النتائج الرسمية قبل منتصف الليل.',
+			25 => 'اللجنة تتوقع إعلان النتائج الرسمية خلال ساعات.',
 			70 => 'وصول أول صناديق الاقتراع إلى مركز الفرز الرئيسي.',
 		),
 		'paragraph' => 'تفاصيل الخبر.',
@@ -52,6 +54,8 @@ function seed(): void {
 		),
 		'related'   => array( 'How the vote count works', 'Five things to know before polling day' ),
 		'title'     => 'Election night: live coverage',
+		'author'    => 'Newsroom',
+		'section'   => 'Elections',
 		'intro'     => 'Counting is under way after a day of high turnout at polling stations across the city.',
 		'timeline'  => 'How the day unfolded',
 		'events'    => array(
@@ -62,7 +66,7 @@ function seed(): void {
 		'live'      => 'Live',
 		'updates'   => array(
 			3  => 'First results from district one show a narrow lead for the independent candidate.',
-			25 => 'The commission expects official results before midnight.',
+			25 => 'The commission expects official results within hours.',
 			70 => 'The first ballot boxes reach the main counting centre.',
 		),
 		'paragraph' => 'The full story.',
@@ -136,12 +140,32 @@ function seed(): void {
 		)
 	);
 
+	// A byline and a section, so the theme's post meta reads like a real story's.
+	$author = username_exists( 'newsroom' );
+	if ( ! $author ) {
+		$author = wp_insert_user(
+			array(
+				'user_login'   => 'newsroom',
+				'user_pass'    => wp_generate_password( 24 ),
+				'user_email'   => 'newsroom@example.com',
+				'display_name' => $copy['author'],
+				'role'         => 'author',
+			)
+		);
+	}
+	$section = term_exists( 'elections', 'category' );
+	if ( ! $section ) {
+		$section = wp_insert_term( $copy['section'], 'category', array( 'slug' => 'elections' ) );
+	}
+
 	wp_insert_post(
 		array(
-			'post_title'   => $copy['title'],
-			'post_name'    => 'election-night',
-			'post_status'  => 'publish',
-			'post_content' => $content,
+			'post_title'    => $copy['title'],
+			'post_name'     => 'election-night',
+			'post_status'   => 'publish',
+			'post_author'   => is_wp_error( $author ) ? 0 : (int) $author,
+			'post_category' => array( (int) $section['term_id'] ),
+			'post_content'  => $content,
 		)
 	);
 }

@@ -16,19 +16,31 @@ Four editorial blocks for WordPress newsrooms, built **right-to-left first**: a 
 
 A scrolling strip of the newest headlines from a category you choose. It shows only posts from the last few hours (24 by default) and **disappears by itself** when there is nothing that recent, so nobody has to remember to take it down. Readers can pause it or close it; it pauses on hover and keyboard focus, and stands still for readers who ask their system for reduced motion.
 
+![The breaking news bar: the newest headlines, with buttons to pause and close it](docs/breaking-news.png)
+
 ### Read also
 
 The "اقرأ أيضاً" box: up to five related articles, picked by searching in the editor and put in any order. It renders on the server, so a linked article that is later unpublished or deleted simply drops out, and a story never links to itself.
+
+![A Read also box with two related articles](docs/read-also.png)
 
 ### Story timeline
 
 How a story unfolded, one dated event after another. Each event has a date picker that fills in a label editors can rewrite ("Morning", "Day 2"), a heading and free content. It saves as plain HTML, an ordered list with machine-readable `<time>` dates, so it outlives the plugin.
 
+![A story timeline: three events of the day, each with its time, a heading and a line of text](docs/timeline.png)
+
 ### Live updates
 
 A live blog. Editors add timestamped updates, newest on top, and can mark key updates. Readers see each update's time and a "how long ago" label that keeps counting, and when new updates are published they get a "Show 2 new updates" button that brings them in **without reloading the page**. Turning off "Coverage is live" shows readers that coverage has ended and stops the checking, on pages they already have open too.
 
+![Two updates are published while a reader has the page open: the reader is offered them, and they come in at the top without a reload, the key update marked](docs/live-updates.gif)
+
 The updates are saved as ordinary blocks, so if the plugin is ever removed they stay in the post as plain content, without their times.
+
+In the editor, "Add an update" puts a new entry on top with the caret already in it, and the Coverage panel turns live coverage on or off and sets how often open pages check for new updates.
+
+![The live blog in the block editor, selected, with its Coverage settings in the sidebar](docs/editor.png)
 
 ## Right to left, built in
 
@@ -37,6 +49,8 @@ The updates are saved as ordinary blocks, so if the plugin is ever removed they 
 - **Arabic translation included**, written for Arabic readers rather than translated word for word, with all six plural forms (`عرض تحديثين جديدين` for two new updates, `عرض 3 تحديثات جديدة` for three).
 - **Western digits in every label**, matching how WordPress itself prints numbers in Arabic, so nothing changes when the page's scripts take over.
 - **Tested in Arabic**: the end-to-end suite runs a second WordPress in Arabic and checks the direction, the mirrored layout, the translations and the plural forms.
+
+![The breaking news bar in Arabic: the label on the right, and the headlines reading right to left](docs/breaking-news-ar.png)
 
 ## Installation
 
@@ -69,6 +83,7 @@ composer analyse      # PHPStan, level 8
 composer test         # PHPUnit with Brain Monkey
 npm run test:e2e      # Playwright, in English and Arabic, on WordPress Playground
 npm run playground    # a local site with the demo story, on port 9400
+npm run screenshots   # retake the images in docs/ from the demo story (the animation needs ffmpeg)
 npm run plugin-zip    # the release zip, built from the last commit without development files
 ```
 
