@@ -56,7 +56,15 @@ In the editor, "Add an update" puts a new entry on top with the caret already in
 
 Requires **WordPress 6.8** or later and **PHP 8.1** or later.
 
-**From a release:** download `mantek-newsroom-blocks.zip` from the [releases page](https://github.com/mantekio/wp-newsroom-blocks/releases) and upload it under Plugins → Add New → Upload Plugin.
+**From WordPress.org:** go to Plugins → Add Plugin in your dashboard, search for **ManTek Newsroom Blocks**, then install and activate it. Its directory page is [wordpress.org/plugins/mantek-newsroom-blocks](https://wordpress.org/plugins/mantek-newsroom-blocks/).
+
+**With Composer:** it installs as `wp-content/plugins/mantek-newsroom-blocks`, or wherever your project's `installer-paths` send plugins, through [`composer/installers`](https://github.com/composer/installers). On a fresh project Composer won't run that installer until you allow it in your root `composer.json`, which most WordPress Composer setups already do: `"config": { "allow-plugins": { "composer/installers": true } }`.
+
+```bash
+composer require mantekio/wp-newsroom-blocks
+```
+
+**From a release:** download `mantek-newsroom-blocks.zip` from the [releases page](https://github.com/mantekio/wp-newsroom-blocks/releases) and upload it under Plugins → Add Plugin → Upload Plugin.
 
 **From source:** clone the repository into `wp-content/plugins/mantek-newsroom-blocks` and activate it. Give the folder that name in the command: a plain clone takes the repository's name, `wp-newsroom-blocks`, and a copy installed later from a release would then sit beside it instead of replacing it.
 
