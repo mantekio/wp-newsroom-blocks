@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-11-09T04:44:23+00:00\n"
-"PO-Revision-Date: 2026-11-09T04:44:23+00:00\n"
+"PO-Revision-Date: 2026-11-15T00:00:00+00:00\n"
 "Language: ar\n"
 "Plural-Forms: nplurals=6; plural=(n == 0) ? 0 : ((n == 1) ? 1 : ((n == 2) ? 2 : ((n % 100 >= 3 && n % 100 <= 10) ? 3 : ((n % 100 >= 11 && n % 100 <= 99) ? 4 : 5))));\n"
 "X-Domain: mantek-newsroom-blocks\n"
@@ -21,7 +21,7 @@ msgstr "https://github.com/mantekio/wp-newsroom-blocks"
 #. Description of the plugin
 #: mantek-newsroom-blocks.php
 msgid "Editorial blocks for newsrooms, built right-to-left first: Read also, Story timeline, Live updates and a Breaking news bar."
-msgstr "مكوّنات تحريرية لغرف الأخبار، صُمّمت للكتابة من اليمين إلى اليسار أولاً: «اقرأ أيضاً»، والخط الزمني للقصة، والتغطية المباشرة، وشريط الأخبار العاجلة."
+msgstr "مكوّنات تحريرية لغرف الأخبار، صُمّمت للكتابة من اليمين إلى اليسار أولاً: \"اقرأ أيضاً\"، والخط الزمني للقصة، والتغطية المستمرة، وشريط الأخبار العاجلة."
 
 #. Author of the plugin
 #: mantek-newsroom-blocks.php
@@ -170,7 +170,7 @@ msgstr "التغطية مستمرة"
 
 #: build/live-updates/index.js:1
 msgid "Readers see a Live badge and are offered new updates without reloading."
-msgstr "يرى القرّاء شارة «مباشر»، وتُعرض عليهم التحديثات الجديدة دون إعادة تحميل الصفحة."
+msgstr "يرى القرّاء شارة \"مباشر\"، وتُعرض عليهم التحديثات الجديدة دون إعادة تحميل الصفحة."
 
 #: build/live-updates/index.js:1
 msgid "Readers see that coverage has ended, and the page stops checking for updates."
@@ -291,17 +291,17 @@ msgstr "تحديث مباشر"
 #: build/live-update/block.json
 msgctxt "block description"
 msgid "One timestamped entry in a live blog."
-msgstr "إدخال واحد بتوقيته في تغطية مباشرة."
+msgstr "إدخال واحد بتوقيته في تغطية مستمرة."
 
 #: build/live-updates/block.json
 msgctxt "block title"
 msgid "Live updates"
-msgstr "تغطية مباشرة"
+msgstr "تغطية مستمرة"
 
 #: build/live-updates/block.json
 msgctxt "block description"
 msgid "A live blog: timestamped updates, newest first, which readers see arrive without reloading the page."
-msgstr "تغطية مباشرة: تحديثات بتوقيتها، الأحدث أولاً، يراها القرّاء فور وصولها دون إعادة تحميل الصفحة."
+msgstr "تغطية مستمرة: تحديثات بتوقيتها، الأحدث أولاً، يراها القرّاء فور وصولها دون إعادة تحميل الصفحة."
 
 #: build/live-updates/block.json
 msgctxt "block keyword"

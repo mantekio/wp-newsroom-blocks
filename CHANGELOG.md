@@ -2,6 +2,11 @@
 
 All notable changes to **ManTek Newsroom Blocks** are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+- Arabic: the live blog block is called تغطية مستمرة (ongoing coverage) instead of تغطية مباشرة, in the inserter, in its description and in the plugin description, and quoted labels use straight double quotes. The Arabic demo story and screenshots follow.
+
 ## [0.9.0]
 
 ### Added
@@ -15,4 +20,5 @@ All notable changes to **ManTek Newsroom Blocks** are documented here. The forma
 - Arabic translation, with all six Arabic plural forms.
 - Tests: PHPUnit with Brain Monkey, Vitest, and Playwright end-to-end tests in English and Arabic on WordPress Playground. CI runs them on PHP 8.1 and 8.4, and on WordPress 6.8 and the latest version.
 
+[Unreleased]: https://github.com/mantekio/wp-newsroom-blocks/compare/v0.9.0...HEAD
 [0.9.0]: https://github.com/mantekio/wp-newsroom-blocks/releases/tag/v0.9.0
