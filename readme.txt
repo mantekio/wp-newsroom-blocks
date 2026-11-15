@@ -53,7 +53,7 @@ The blocks ship compiled. Their source code, the build tools and the tests are o
 
 == Installation ==
 
-1. In your WordPress admin, go to Plugins > Add New Plugin and search for "ManTek Newsroom Blocks".
+1. In your WordPress admin, go to Plugins > Add Plugin and search for "ManTek Newsroom Blocks".
 2. Install and activate it.
 3. In the block editor, find the four blocks in the inserter under "Newsroom".
 
