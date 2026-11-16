@@ -18,21 +18,13 @@ use WP_Post;
 
 final class PluginTest extends TestCase {
 
-	public function test_boot_hooks_registration_translations_category_and_rest(): void {
-		Actions\expectAdded( 'init' )->twice();
+	public function test_boot_hooks_registration_category_and_rest(): void {
+		Actions\expectAdded( 'init' )->once()->with( array( Plugin::class, 'register_blocks' ) );
 		Filters\expectAdded( 'block_categories_all' )->once()->with( array( Plugin::class, 'register_category' ) );
 		Filters\expectAdded( 'wp_kses_allowed_html' )->once()->with( array( Plugin::class, 'allow_time_element' ), 10, 2 );
 		Actions\expectAdded( 'rest_api_init' )->once()->with( array( LiveUpdates::class, 'register_routes' ) );
 
 		Plugin::boot();
-	}
-
-	public function test_points_wordpress_at_the_bundled_translations(): void {
-		Functions\when( 'plugin_basename' )->justReturn( 'mantek-newsroom-blocks/mantek-newsroom-blocks.php' );
-		// Needed by a network-activated copy, for which WordPress registers no translations path itself.
-		Functions\expect( 'load_plugin_textdomain' )->once()->with( 'mantek-newsroom-blocks', false, 'mantek-newsroom-blocks/languages' )->andReturn( true );
-
-		Plugin::load_textdomain();
 	}
 
 	public function test_adds_the_newsroom_category_once(): void {

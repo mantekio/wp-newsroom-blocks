@@ -3,7 +3,7 @@
  * Plugin Name:       ManTek Newsroom Blocks
  * Plugin URI:        https://github.com/mantekio/wp-newsroom-blocks
  * Description:       Editorial blocks for newsrooms, built right-to-left first: Read also, Story timeline, Live updates and a Breaking news bar.
- * Version:           0.9.0
+ * Version:           0.9.1
  * Requires at least: 6.8
  * Requires PHP:      8.1
  * Author:            ManTek Technologies
@@ -22,7 +22,7 @@ namespace ManTek\NewsroomBlocks;
 
 defined( 'ABSPATH' ) || exit;
 
-const VERSION     = '0.9.0';
+const VERSION     = '0.9.1';
 const PLUGIN_FILE = __FILE__;
 
 require_once __DIR__ . '/includes/Plugin.php';

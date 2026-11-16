@@ -4,7 +4,7 @@ Tags: live blog, breaking news, news ticker, rtl, arabic
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.9.0
+Stable tag: 0.9.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -94,6 +94,11 @@ Every 30 seconds by default, and every 15 seconds at most. You can change it in 
 5. The live blog in the editor, with its Coverage settings.
 
 == Changelog ==
+
+= 0.9.1 =
+
+* The Arabic translation calls the live blog "تغطية مستمرة" (ongoing coverage) instead of "تغطية مباشرة", and some of its labels read more naturally.
+* Translations now come from WordPress.org's language packs, as for every plugin in the directory, so the plugin no longer loads them itself. The Arabic pack is complete.
 
 = 0.9.0 =
 
