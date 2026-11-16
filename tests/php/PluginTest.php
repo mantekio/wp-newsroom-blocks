@@ -20,11 +20,38 @@ final class PluginTest extends TestCase {
 
 	public function test_boot_hooks_registration_category_and_rest(): void {
 		Actions\expectAdded( 'init' )->once()->with( array( Plugin::class, 'register_blocks' ) );
+		Filters\expectAdded( 'load_script_translation_file' )->once()->with( array( Plugin::class, 'prefer_language_pack' ), 10, 3 );
 		Filters\expectAdded( 'block_categories_all' )->once()->with( array( Plugin::class, 'register_category' ) );
 		Filters\expectAdded( 'wp_kses_allowed_html' )->once()->with( array( Plugin::class, 'allow_time_element' ), 10, 2 );
 		Actions\expectAdded( 'rest_api_init' )->once()->with( array( LiveUpdates::class, 'register_routes' ) );
 
 		Plugin::boot();
+	}
+
+	public function test_editor_translations_come_from_the_language_pack_when_it_has_the_file(): void {
+		// tests/php/fixtures/languages stands in for WP_LANG_DIR, with a pack file for the live blog's script only.
+		$name    = 'mantek-newsroom-blocks-ar-' . md5( 'build/live-updates/index.js' ) . '.json';
+		$bundled = dirname( \ManTek\NewsroomBlocks\PLUGIN_FILE ) . '/languages/' . $name;
+
+		self::assertSame( WP_LANG_DIR . '/plugins/' . $name, Plugin::prefer_language_pack( $bundled, 'mantek-live-updates-editor-script', Plugin::TEXT_DOMAIN ) );
+	}
+
+	public function test_the_bundled_copy_stays_when_the_pack_lacks_the_file(): void {
+		$bundled = dirname( \ManTek\NewsroomBlocks\PLUGIN_FILE ) . '/languages/mantek-newsroom-blocks-ar-' . md5( 'build/read-also/index.js' ) . '.json';
+
+		self::assertSame( $bundled, Plugin::prefer_language_pack( $bundled, 'mantek-read-also-editor-script', Plugin::TEXT_DOMAIN ) );
+	}
+
+	public function test_leaves_other_script_translations_alone(): void {
+		$name = 'mantek-newsroom-blocks-ar-' . md5( 'build/live-updates/index.js' ) . '.json';
+
+		$elsewhere = '/var/www/wp-content/plugins/other-plugin/languages/' . $name;
+		self::assertSame( $elsewhere, Plugin::prefer_language_pack( $elsewhere, 'other-script', Plugin::TEXT_DOMAIN ) );
+
+		$bundled = dirname( \ManTek\NewsroomBlocks\PLUGIN_FILE ) . '/languages/' . $name;
+		self::assertSame( $bundled, Plugin::prefer_language_pack( $bundled, 'other-script', 'other-domain' ) );
+
+		self::assertFalse( Plugin::prefer_language_pack( false, 'other-script', Plugin::TEXT_DOMAIN ) );
 	}
 
 	public function test_adds_the_newsroom_category_once(): void {

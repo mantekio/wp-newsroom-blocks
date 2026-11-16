@@ -2,6 +2,11 @@
 
 All notable changes to **ManTek Newsroom Blocks** are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+- The editor's translations come from the language pack when one is installed, like the rest of the plugin's strings, with the bundled copy as the fallback. Until now the editor always used the bundled copy, because WordPress tries a plugin's own folder first, so a correction made on translate.wordpress.org reached the editor only with a new release.
+
 ## [0.9.1]
 
 ### Changed
@@ -24,5 +29,6 @@ All notable changes to **ManTek Newsroom Blocks** are documented here. The forma
 - Arabic translation, with all six Arabic plural forms.
 - Tests: PHPUnit with Brain Monkey, Vitest, and Playwright end-to-end tests in English and Arabic on WordPress Playground. CI runs them on PHP 8.1 and 8.4, and on WordPress 6.8 and the latest version.
 
+[Unreleased]: https://github.com/mantekio/wp-newsroom-blocks/compare/v0.9.1...HEAD
 [0.9.1]: https://github.com/mantekio/wp-newsroom-blocks/releases/tag/v0.9.1
 [0.9.0]: https://github.com/mantekio/wp-newsroom-blocks/releases/tag/v0.9.0

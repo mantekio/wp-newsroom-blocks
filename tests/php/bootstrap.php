@@ -16,6 +16,7 @@ define( 'ABSPATH', '/tmp/wordpress/' );
 define( 'MINUTE_IN_SECONDS', 60 );
 define( 'HOUR_IN_SECONDS', 3600 );
 define( 'DAY_IN_SECONDS', 86400 );
+define( 'WP_LANG_DIR', __DIR__ . '/fixtures/languages' );
 define( 'ManTek\NewsroomBlocks\PLUGIN_FILE', $root . '/mantek-newsroom-blocks.php' );
 
 require __DIR__ . '/stubs.php';

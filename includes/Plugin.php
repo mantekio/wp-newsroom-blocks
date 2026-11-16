@@ -40,6 +40,7 @@ final class Plugin {
 	 */
 	public static function boot(): void {
 		add_action( 'init', array( self::class, 'register_blocks' ) );
+		add_filter( 'load_script_translation_file', array( self::class, 'prefer_language_pack' ), 10, 3 );
 		add_filter( 'block_categories_all', array( self::class, 'register_category' ) );
 		add_filter( 'wp_kses_allowed_html', array( self::class, 'allow_time_element' ), 10, 2 );
 		add_action( 'rest_api_init', array( LiveUpdates::class, 'register_routes' ) );
@@ -125,6 +126,33 @@ final class Plugin {
 				wp_set_script_translations( $handle, self::TEXT_DOMAIN, $languages );
 			}
 		}
+	}
+
+	/**
+	 * Uses the language pack's copy of an editor script's translations when one is installed.
+	 *
+	 * register_blocks() points the editor scripts at the bundled languages/ folder, and WordPress tries that
+	 * folder before the language packs, so a correction made on translate.wordpress.org would otherwise reach
+	 * the editor only with the next release. The bundled copy stays the fallback for a site with no pack, which
+	 * a network-activated copy needs before WordPress 7.2.
+	 *
+	 * @param mixed $file   The translation file WordPress is about to load, or false.
+	 * @param mixed $handle The script handle.
+	 * @param mixed $domain The text domain.
+	 * @return mixed The pack's copy of the same file when it exists, otherwise the file WordPress asked for.
+	 */
+	public static function prefer_language_pack( mixed $file, mixed $handle = null, mixed $domain = null ): mixed {
+		if ( self::TEXT_DOMAIN !== $domain || ! is_string( $file ) ) {
+			return $file;
+		}
+
+		if ( ! str_starts_with( $file, dirname( PLUGIN_FILE ) . '/languages/' ) ) {
+			return $file;
+		}
+
+		$pack = WP_LANG_DIR . '/plugins/' . basename( $file );
+
+		return is_readable( $pack ) ? $pack : $file;
 	}
 
 	/**
