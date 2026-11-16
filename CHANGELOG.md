@@ -6,6 +6,7 @@ All notable changes to **ManTek Newsroom Blocks** are documented here. The forma
 
 ### Changed
 - Arabic: the live blog block is called تغطية مستمرة (ongoing coverage) instead of تغطية مباشرة, in the inserter, in its description and in the plugin description, and quoted labels use straight double quotes. The Arabic demo story and screenshots follow.
+- Arabic: the zero forms of five plural strings read naturally, for example قبل أقل من دقيقة rather than قبل 0 دقيقة, as agreed with the Arabic translation team.
 
 ## [0.9.0]
 
